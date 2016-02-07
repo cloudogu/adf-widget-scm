@@ -475,16 +475,14 @@ angular.module('adf.widget.scm')
 
 
 angular.module('adf.widget.scm')
-  .factory('SCM', ["$http", function($http){
-
-    var endpoint = '/api/scm/';
-
+  .factory('SCM', ["scmEndpoint", "$http", function(scmEndpoint, $http){
+    
     function data(response){
       return response.data;
     }
 
     function request(url){
-      return $http.get(endpoint + url).then(data);
+      return $http.get(scmEndpoint + url).then(data);
     }
 
     function getRepositories(){
