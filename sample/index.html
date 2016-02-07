@@ -51,6 +51,7 @@
     <script type="text/javascript">
       angular
        .module('adfWidgetSample', ['adf', 'adf.widget.scm', 'LocalStorageModule'])
+       .constant('scmEndpoint', '/api/scm/')
        .config(function(dashboardProvider, localStorageServiceProvider){
          localStorageServiceProvider.setPrefix('adf.scm');
          dashboardProvider.structure('1', {

@@ -9,6 +9,14 @@ SCM-Manager widgets for the [angular-dashboard-framework](https://github.com/sdo
 * Line char for the last 50 commits
 * Table with last 10 commits
 
+The SCM-Manager rest endpoint must be configured with an angular constant e.g.:
+
+```javascript
+angular.constant('scmEndpoint', '/api/scm/');
+```
+
+The endpoint should be an proxy server which handles cors and authentication for the widgets.
+
 ## Build
 
 The widget is build with the help of [node](https://nodejs.org/), [npm](https://www.npmjs.com/), [bower](http://bower.io/) and [gulp](http://gulpjs.com/). For a install instruction for node and npm, please have a look [here](https://docs.npmjs.com/getting-started/installing-node).

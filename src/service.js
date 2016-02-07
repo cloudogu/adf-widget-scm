@@ -25,16 +25,14 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .factory('SCM', function($http){
-
-    var endpoint = '/api/scm/';
-
+  .factory('SCM', function(scmEndpoint, $http){
+    
     function data(response){
       return response.data;
     }
 
     function request(url){
-      return $http.get(endpoint + url).then(data);
+      return $http.get(scmEndpoint + url).then(data);
     }
 
     function getRepositories(){
