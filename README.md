@@ -1,6 +1,13 @@
-# adf-widget-SCM-Manager
+# ADF SCM-Manager Widgets
 
-SCM-Manager widget for the [angular-dashboard-framework](https://github.com/sdorra/angular-dashboard-framework).
+![SCM-Manager Logo](http://download.scm-manager.org/images/logo/scm-manager_logo.jpg)
+
+SCM-Manager widgets for the [angular-dashboard-framework](https://github.com/sdorra/angular-dashboard-framework). The following SCM-Manager widgets are available:
+
+* Pie chart for commit count by author
+* Line chart for commit count by month
+* Line char for the last 50 commits
+* Table with last 10 commits
 
 ## Build
 
@@ -20,7 +27,7 @@ npm install
 bower install
 ```
 
-#### Build the adf-widget-SCM-Manager
+#### Build
 
 ```bash
 gulp
@@ -41,11 +48,14 @@ Each goal can be used as parameter for the gulp command.
 Include the script in your index.html and be sure it is loaded after [angular](https://angularjs.org/) and after the [angular-dashboard-framework](https://github.com/sdorra/angular-dashboard-framework).
 
 ```html
-<script type="text/javascript" src="path/to/SCM-Manager.min.js"></script>
+<script type="text/javascript" src="bower_components/highcharts/adapters/standalone-framework.src.js"></script>
+<script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+<script type="text/javascript" src="bower_components/adf-widget-scm/dist/adf-widget-scm.min.js"></script>
 ```
 
 Define a dependency for the module:
 
 ```javascript
-angular.module('sample', ['adf', 'adf.widget.SCM-Manager']);
+angular.module('sample', ['adf', 'adf.widget.scm']);
 ```
