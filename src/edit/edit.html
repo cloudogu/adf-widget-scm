@@ -1,0 +1,8 @@
+<form role="form">
+  <div class="form-group">
+    <label for="repository">Repository</label>
+    <select name="repository" id="repository" class="form-control" ng-model="config.repository">
+      <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">{{repository.name}}</option>
+    </select>
+  </div>
+</form>
