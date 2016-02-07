@@ -25,28 +25,43 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsByMonthController', function(config, repository, commitsByMonth){
+  .controller('LastCommitsController', function(config, repository, commits){
     var vm = this;
 
-    function parseDate(input) {
-      var parts = input.split('-');
-      return Date.UTC(parseInt(parts[0]), parseInt(parts[1]), 1);
-    }
+    if (repository && commits) {
 
-    if (repository && commitsByMonth) {
-      var seriesData = [];
-      angular.forEach(commitsByMonth.month, function(entry){
-        if (entry.value !== '1970-01' ){
-          seriesData.push([parseDate(entry.value), entry.count]);
+      var data = {};
+      angular.forEach(commits, function(commit){
+        var date = new Date(commit.date);
+        var key = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+        var entry = data[key];
+        if (entry){
+          entry.count += 1;
+        } else {
+          data[key] = {
+            count: 1,
+            date: Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+          };
         }
       });
+
+      var seriesData = [];
+      angular.forEach(data, function(entry){
+        seriesData.push([entry.date, entry.count]);
+      });
+
+      if (seriesData.length > 0){
+        seriesData.sort(function(a, b){
+          return a[0] - b[0];
+        });
+      }
 
       vm.chartConfig = {
         chart: {
           type: 'spline'
         },
         title: {
-          text: repository.name + ' commit history'
+          text: repository.name + ' last commits'
         },
         xAxis: {
           type: 'datetime',

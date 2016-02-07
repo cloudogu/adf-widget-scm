@@ -53,6 +53,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
         templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
         controller: 'CommitsByAuthorController',
         controllerAs: 'vm',
+        reload: true,
         resolve: {
           repository: resolveRepository,
           commitsByAuthor: function(SCM, config){
@@ -71,6 +72,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
         templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
         controller: 'CommitsByMonthController',
         controllerAs: 'vm',
+        reload: true,
         resolve: {
           repository: resolveRepository,
           commitsByMonth: function(SCM, config){
@@ -83,12 +85,32 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
         },
         edit: edit
       })
+      .widget('scm-commits-last-commits', {
+        title: 'SCM Commits line chart',
+        description: 'SCM-Manager line char for the last 50 commits',
+        templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
+        controller: 'LastCommitsController',
+        controllerAs: 'vm',
+        reload: true,
+        resolve: {
+          repository: resolveRepository,
+          commits: function(SCM, config){
+            var result = null;
+            if (config.repository){
+              result = SCM.getCommits(config.repository, 50);
+            }
+            return result;
+          }
+        },
+        edit: edit
+      })
       .widget('scm-commits', {
         title: 'SCM Commits',
         description: 'SCM-Manager commits',
         templateUrl: '{widgetsPath}/scm/src/commits/view.html',
         controller: 'CommitsController',
         controllerAs: 'vm',
+        reload: true,
         resolve: {
           repository: resolveRepository,
           commits: function(SCM, config){
