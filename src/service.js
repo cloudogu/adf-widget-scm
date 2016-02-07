@@ -31,33 +31,33 @@ angular.module('adf.widget.scm')
 
     function data(response){
       return response.data;
-    };
+    }
 
     function request(url){
       return $http.get(endpoint + url).then(data);
-    };
+    }
 
     function getRepositories(){
       return request('repositories.json');
-    };
+    }
 
     function getRepository(id){
       return request('repositories/' + id + '.json');
-    };
+    }
 
     function getCommitsByAuthor(id){
       return request('plugins/statistic/' + id + '/commits-per-author.json');
-    };
+    }
 
     function getCommitsByMonth(id){
       return request('plugins/statistic/' + id + '/commits-per-month.json');
-    };
+    }
 
     function getCommits(id, limit){
       return request('repositories/' + id + '/changesets.json?limit=' + limit).then(function(data){
         return data.changesets;
       });
-    };
+    }
 
     return {
       getRepositories: getRepositories,
