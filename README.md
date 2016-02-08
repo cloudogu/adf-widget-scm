@@ -6,7 +6,7 @@ SCM-Manager widgets for the [angular-dashboard-framework](https://github.com/sdo
 
 * Pie chart for commit count by author
 * Line chart for commit count by month
-* Line char for the last 50 commits
+* Line chart for the last 50 commits
 * Table with last 10 commits
 
 The SCM-Manager rest endpoint must be configured with an angular constant e.g.:
