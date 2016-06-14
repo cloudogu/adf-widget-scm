@@ -30,7 +30,7 @@ angular.module('adf.widget.scm')
 
     function parseDate(input) {
       var parts = input.split('-');
-      return Date.UTC(parseInt(parts[0]), parseInt(parts[1]), 1);
+      return Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
     }
 
     if (repository && commitsByMonth) {
