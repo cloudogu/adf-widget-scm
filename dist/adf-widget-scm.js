@@ -28,14 +28,18 @@
 angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
   .config(["dashboardProvider", function(dashboardProvider){
 
+    // category for widget add dialog
+    var category = 'SCM-Manager';
+
     var edit = {
       templateUrl: '{widgetsPath}/scm/src/edit/edit.html',
       controller: 'ScmEditController',
       controllerAs: 'vm',
       resolve: {
-        repositories: function(SCM){
+        /** @ngInject **/
+        repositories: ["SCM", function(SCM){
           return SCM.getRepositories();
-        }
+        }]
       }
     };
 
@@ -52,6 +56,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
       .widget('scm-commits-by-author', {
         title: 'SCM Commits By Author',
         description: 'SCM-Manager pie chart for commit count by author',
+        category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
         controller: 'CommitsByAuthorController',
         controllerAs: 'vm',
@@ -71,6 +76,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
       .widget('scm-commits-by-month', {
         title: 'SCM Commits By Month',
         description: 'SCM-Manager line chart for commit count by month',
+        category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
         controller: 'CommitsByMonthController',
         controllerAs: 'vm',
@@ -90,6 +96,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
       .widget('scm-commits-last-commits', {
         title: 'SCM Commits line chart',
         description: 'SCM-Manager line char for the last 50 commits',
+        category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
         controller: 'LastCommitsController',
         controllerAs: 'vm',
@@ -109,6 +116,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
       .widget('scm-commits', {
         title: 'SCM Commits',
         description: 'SCM-Manager commits',
+        category: category,
         templateUrl: '{widgetsPath}/scm/src/commits/view.html',
         controller: 'CommitsController',
         controllerAs: 'vm',
@@ -330,7 +338,7 @@ angular.module('adf.widget.scm')
 
     function parseDate(input) {
       var parts = input.split('-');
-      return Date.UTC(parseInt(parts[0]), parseInt(parts[1]), 1);
+      return Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
     }
 
     if (repository && commitsByMonth) {
