@@ -25,10 +25,15 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsController', function(config, repository, commits){
+  .controller('CommitsController', function($sce, config, repository, commits){
     var vm = this;
 
     vm.repository = repository;
+
+    // allow html descriptions
+    angular.forEach(commits, function(commit){
+      commit.description = $sce.trustAsHtml(commit.description);
+    });
     vm.commits = commits;
 
     vm.gravatarHash = function(commit){

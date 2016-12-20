@@ -10,7 +10,7 @@
         </div>
         <div class="media-body">
           <!--h4 class="media-heading">Media heading</h4-->
-          <p>{{commit.description}}</p>
+          <p ng-bind-html="commit.description"></p>
           <small>{{commit.author.name}}, {{commit.date | date: 'yyyy-MM-dd HH:mm'}}</small>
         </div>
       </li>
