@@ -23,7 +23,8 @@
   ],
   "description": "SCM-Manager related widgets",
   "dependencies": {
-    "angular-dashboard-framework": ">=0.10",
+    "angular": ">=1.4 <=1.6",
+    "angular-dashboard-framework": "~0.12.0",
     "highcharts-ng": "~0.0.11",
     "highcharts": "~4.2.2"
   },
