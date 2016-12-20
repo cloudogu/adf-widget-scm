@@ -25,48 +25,31 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsByMonthController', function(config, repository, commitsByMonth){
+  .controller('CommitsByMonthController', function(config, repository, commitsByMonth) {
     var vm = this;
+    if (commitsByMonth) {
+      vm.chart = createChart();
+    }
 
     function parseDate(input) {
       var parts = input.split('-');
       return Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
     }
 
-    if (repository && commitsByMonth) {
-      var seriesData = [];
-      angular.forEach(commitsByMonth.month, function(entry){
-        if (entry.value !== '1970-01' ){
-          seriesData.push([parseDate(entry.value), entry.count]);
-        }
+    function createChart() {
+      var chartData = [];
+      var chart = {
+        labels: [],
+        data: [chartData],
+        series: ["Commits"],
+        class: "chart-line"
+      };
+
+      angular.forEach(commitsByMonth.month, function(month) {
+        chart.labels.push(month.value);
+        chartData.push(month.count);
       });
 
-      vm.chartConfig = {
-        chart: {
-          type: 'spline'
-        },
-        title: {
-          text: repository.name + ' commit history'
-        },
-        xAxis: {
-          type: 'datetime',
-          dateTimeLabelFormats: {
-            month: '%Y-%m'
-          },
-          title: {
-            text: 'Month'
-          }
-        },
-        yAxis: {
-          title: {
-            text: 'Commits'
-          },
-          min: 0
-        },
-        series: [{
-          name: repository.name,
-          data: seriesData
-        }]
-      };
+      return chart;
     }
   });

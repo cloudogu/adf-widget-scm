@@ -29,48 +29,33 @@ angular.module('adf.widget.scm')
     var vm = this;
 
     if (repository && commitsByAuthor) {
-      var seriesData = [];
-      angular.forEach(commitsByAuthor.author, function(entry){
-        seriesData.push({
-          name: entry.value,
-          y: entry.count
-        });
+      vm.chart = createChart();
+    }
+
+    function createChart() {
+      var data = {};
+
+      angular.forEach(commitsByAuthor.author, function (entry) {
+        var author = entry.value;
+        if (data[author]) {
+          data[author]++;
+        } else {
+          data[author] = 1;
+        }
       });
 
-      if (seriesData.length > 0){
-        seriesData.sort(function(a, b){
-          return b.y - a.y;
-        });
-        seriesData[0].sliced = true;
-        seriesData[0].selected = true;
-      }
-
-      vm.chartConfig = {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false
-        },
-        title: {
-          text: repository.name
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              color: '#000000',
-              connectorColor: '#000000',
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-          }
-        },
-        series: [{
-          type: 'pie',
-          name: repository.name,
-          data: seriesData
-        }]
+      var chart = {
+        labels: [],
+        data: [],
+        series: ["Commits"],
+        class: "chart-pie"
       };
+
+      angular.forEach(data, function (count, author) {
+        chart.labels.push(author);
+        chart.data.push(count);
+      });
+
+      return chart;
     }
   });

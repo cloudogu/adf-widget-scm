@@ -24,7 +24,7 @@
 
 'use strict';
 
-angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
+angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
   .config(function(dashboardProvider){
 
     // category for widget add dialog
@@ -55,7 +55,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
         title: 'SCM Commits By Author',
         description: 'SCM-Manager pie chart for commit count by author',
         category: category,
-        templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
+        templateUrl: '{widgetsPath}/scm/src/charts/pie-chart.html',
         controller: 'CommitsByAuthorController',
         controllerAs: 'vm',
         reload: true,
@@ -75,7 +75,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
         title: 'SCM Commits By Month',
         description: 'SCM-Manager line chart for commit count by month',
         category: category,
-        templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
+        templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
         controller: 'CommitsByMonthController',
         controllerAs: 'vm',
         reload: true,
@@ -95,7 +95,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'highcharts-ng'])
         title: 'SCM Commits line chart',
         description: 'SCM-Manager line char for the last 50 commits',
         category: category,
-        templateUrl: '{widgetsPath}/scm/src/charts/chart.html',
+        templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
         controller: 'LastCommitsController',
         controllerAs: 'vm',
         reload: true,

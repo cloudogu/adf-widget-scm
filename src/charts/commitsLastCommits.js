@@ -25,10 +25,21 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('LastCommitsController', function(config, repository, commits){
+  .controller('LastCommitsController', function($filter, config, repository, commits){
     var vm = this;
 
     if (repository && commits) {
+      vm.chart = createChart();
+    }
+
+    function createChart() {
+      var chartData = [];
+      var chart = {
+        labels: [],
+        data: [chartData],
+        series: ["Commits"],
+        class: "chart-line"
+      };
 
       var data = {};
       angular.forEach(commits, function(commit){
@@ -39,49 +50,21 @@ angular.module('adf.widget.scm')
           entry.count += 1;
         } else {
           data[key] = {
-            count: 1,
-            date: Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+            date: key,
+            count: 1
           };
         }
       });
 
-      var seriesData = [];
-      angular.forEach(data, function(entry){
-        seriesData.push([entry.date, entry.count]);
+      angular.forEach(data, function(entry) {
+        console.log(entry);
+        chart.labels.push(entry.date);
+        chartData.push(entry.count);
       });
 
-      if (seriesData.length > 0){
-        seriesData.sort(function(a, b){
-          return a[0] - b[0];
-        });
-      }
+      chart.labels.reverse();
+      chartData.reverse();
 
-      vm.chartConfig = {
-        chart: {
-          type: 'spline'
-        },
-        title: {
-          text: repository.name + ' last commits'
-        },
-        xAxis: {
-          type: 'datetime',
-          dateTimeLabelFormats: {
-            month: '%Y-%m'
-          },
-          title: {
-            text: 'Month'
-          }
-        },
-        yAxis: {
-          title: {
-            text: 'Commits'
-          },
-          min: 0
-        },
-        series: [{
-          name: repository.name,
-          data: seriesData
-        }]
-      };
+      return chart;
     }
   });
