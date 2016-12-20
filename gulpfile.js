@@ -108,7 +108,14 @@ gulp.task('serve', ['watch', 'sample'], function(){
       request.headers['Authorization'] = 'Basic ' + auth;
       next();
     }
-  }
+  };
+
+  var userAgent = function(){
+    return function(request, response, next){
+      request.headers['User-Agent'] = 'adf-scm-widget/v1';
+      next();
+    }
+  };
 
   connect.server({
     root: ['.tmp/dist', '.'],
@@ -117,6 +124,7 @@ gulp.task('serve', ['watch', 'sample'], function(){
     middleware: function(connect, opt) {
       return [
         authentication(connect, opt),
+        userAgent(),
         proxy(proxyOptions)];
     }
   });
