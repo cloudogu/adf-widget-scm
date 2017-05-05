@@ -37,11 +37,7 @@ angular.module('adf.widget.scm')
 
       angular.forEach(commitsByAuthor.author, function (entry) {
         var author = entry.value;
-        if (data[author]) {
-          data[author]++;
-        } else {
-          data[author] = 1;
-        }
+        data[author]= entry.count;
       });
 
       var chart = {
