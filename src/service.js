@@ -26,7 +26,6 @@
 
 angular.module('adf.widget.scm')
   .factory('SCM', function(scmEndpoint, $http){
-
     function data(response){
       return response.data;
     }
@@ -51,14 +50,9 @@ angular.module('adf.widget.scm')
       return request('plugins/statistic/' + id + '/commits-per-month.json');
     }
 
-    function getTeamMember(id){
-      return request('repositories/'+id);
-    }
-
     function getFileContent(id, filePath){
       return request('repositories/'+id+'/content?path='+filePath);
     }
-
 
     function getCommits(id, limit){
       return request('repositories/' + id + '/changesets.json?limit=' + limit).then(function(data){
@@ -72,7 +66,6 @@ angular.module('adf.widget.scm')
       getCommitsByAuthor: getCommitsByAuthor,
       getCommitsByMonth: getCommitsByMonth,
       getCommits: getCommits,
-      getTeamMember: getTeamMember,
       getFileContent: getFileContent
     };
   });
