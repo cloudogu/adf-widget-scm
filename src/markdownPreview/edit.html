@@ -1,0 +1,14 @@
+<form role="form">
+  <div class="form-group">
+    <p><label for="repository">Repository</label>
+      <select name="repository" id="repository" class="form-control" ng-model="config.repository">
+        <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">
+          {{repository.name}}
+        </option>
+      </select>
+    </p>
+    <label for="path">Path to Markdown File</label>
+    <input type="text" class="form-control" id="path" ng-model="config.path">
+  </div>
+</form>
+
