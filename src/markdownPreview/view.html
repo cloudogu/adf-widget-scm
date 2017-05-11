@@ -1,0 +1,11 @@
+<style>
+  div.markdownContent{
+    overflow: auto;
+    width: 100%;
+  }
+</style>
+<div class="alert alert-info" ng-if="!vm.fileContent">
+  Please configure a specific file
+</div>
+<div ng-if="vm.fileContent" btf-markdown="vm.fileContent" class="markdownContent">
+</div>
