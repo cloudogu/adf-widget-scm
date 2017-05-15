@@ -50,14 +50,18 @@ angular.module('adf.widget.scm')
       return request('plugins/statistic/' + id + '/commits-per-month.json');
     }
 
-    function getFileContent(id, filePath){
-      return request('repositories/'+id+'/content?path='+filePath);
-    }
-
     function getCommits(id, limit){
       return request('repositories/' + id + '/changesets.json?limit=' + limit).then(function(data){
         return data.changesets;
       });
+    }
+
+    function getFileContent(id, filePath){
+      return request('repositories/'+id+'/content?path='+filePath);
+    }
+
+    function getBranchesByRepositoryId(id){
+      return request('repositories/' + id + '/branches');
     }
 
     return {
@@ -66,6 +70,7 @@ angular.module('adf.widget.scm')
       getCommitsByAuthor: getCommitsByAuthor,
       getCommitsByMonth: getCommitsByMonth,
       getCommits: getCommits,
-      getFileContent: getFileContent
+      getFileContent: getFileContent,
+      getBranchesByRepositoryId: getBranchesByRepositoryId
     };
   });
