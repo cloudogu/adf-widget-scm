@@ -53,7 +53,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'bt
     dashboardProvider
       .widget('scm-commits-by-author', {
         title: 'SCM Commits By Author',
-        description: 'SCM-Manager pie chart for commit count by author',
+        description: 'Displays pie chart for commit count by author',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/pie-chart.html',
         controller: 'CommitsByAuthorController',
@@ -73,7 +73,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'bt
       })
       .widget('scm-commits-by-month', {
         title: 'SCM Commits By Month',
-        description: 'SCM-Manager line chart for commit count by month',
+        description: 'Displays line chart for commit count by month',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
         controller: 'CommitsByMonthController',
@@ -93,7 +93,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'bt
       })
       .widget('scm-commits-last-commits', {
         title: 'SCM Commits line chart',
-        description: 'SCM-Manager line char for the last 50 commits',
+        description: 'Displays line chart for the last 50 commits',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
         controller: 'LastCommitsController',
@@ -113,7 +113,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'bt
       })
       .widget('scm-commits', {
         title: 'SCM Commits',
-        description: 'SCM-Manager commits',
+        description: 'Displays last commits',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/commits/view.html',
         controller: 'CommitsController',
@@ -133,7 +133,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'bt
       })
       .widget('scm-markdown-content', {
         title: 'SCM Markdown Content',
-        description: 'SCM Markdown Content Preview',
+        description: 'Displays a Markdown Content Preview',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/markdownPreview/view.html',
         controller: 'MarkdownPreviewController',
