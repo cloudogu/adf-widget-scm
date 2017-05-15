@@ -24,7 +24,7 @@
 
 'use strict';
 
-angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'btford.markdown'])
+angular.module('adf.widget.scm', ['adf.provider', 'chart.js', 'ngSanitize', 'btford.markdown'])
   .config(function (dashboardProvider) {
 
     // category for widget add dialog
@@ -141,15 +141,13 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js',  'ngSanitize', 'bt
         reload: true,
         resolve: {
           repository: resolveRepository,
-          fileContent: function(SCM, config){
+          fileContent: function (SCM, config) {
             var result = null;
-            if (config.repository && config.path){
-              result = SCM.getFileContent(config.repository,config.path);
+            if (config.repository && config.path) {
+              result = SCM.getFileContent(config.repository, config.path);
             }
             return result;
           }
-
-
         },
         edit: {
           templateUrl: '{widgetsPath}/scm/src/markdownPreview/edit.html',

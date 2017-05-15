@@ -25,7 +25,7 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('LastCommitsController', function($filter, config, repository, commits){
+  .controller('LastCommitsController', function ($filter, config, repository, commits) {
     var vm = this;
 
     if (repository && commits) {
@@ -40,7 +40,7 @@ angular.module('adf.widget.scm')
               id: 'y-axis-1',
               display: true,
               position: 'left',
-              ticks: { fixedStepSize: 1 },
+              ticks: {fixedStepSize: 1},
               scaleLabel: {
                 display: true,
                 labelString: 'Commits'
@@ -59,11 +59,11 @@ angular.module('adf.widget.scm')
       };
 
       var data = {};
-      angular.forEach(commits, function(commit){
+      angular.forEach(commits, function (commit) {
         var date = new Date(commit.date);
         var key = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
         var entry = data[key];
-        if (entry){
+        if (entry) {
           entry.count += 1;
         } else {
           data[key] = {
@@ -73,7 +73,7 @@ angular.module('adf.widget.scm')
         }
       });
 
-      angular.forEach(data, function(entry) {
+      angular.forEach(data, function (entry) {
         chart.labels.push(entry.date);
         chartData.push(entry.count);
       });

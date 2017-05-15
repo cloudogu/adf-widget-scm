@@ -25,42 +25,42 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .factory('SCM', function(scmEndpoint, $http){
-    function data(response){
+  .factory('SCM', function (scmEndpoint, $http) {
+    function data(response) {
       return response.data;
     }
 
-    function request(url){
+    function request(url) {
       return $http.get(scmEndpoint + url).then(data);
     }
 
-    function getRepositories(){
+    function getRepositories() {
       return request('repositories.json');
     }
 
-    function getRepository(id){
+    function getRepository(id) {
       return request('repositories/' + id + '.json');
     }
 
-    function getCommitsByAuthor(id){
+    function getCommitsByAuthor(id) {
       return request('plugins/statistic/' + id + '/commits-per-author.json');
     }
 
-    function getCommitsByMonth(id){
+    function getCommitsByMonth(id) {
       return request('plugins/statistic/' + id + '/commits-per-month.json');
     }
 
-    function getCommits(id, limit){
-      return request('repositories/' + id + '/changesets.json?limit=' + limit).then(function(data){
+    function getCommits(id, limit) {
+      return request('repositories/' + id + '/changesets.json?limit=' + limit).then(function (data) {
         return data.changesets;
       });
     }
 
-    function getFileContent(id, filePath){
-      return request('repositories/'+id+'/content?path='+filePath);
+    function getFileContent(id, filePath) {
+      return request('repositories/' + id + '/content?path=' + filePath);
     }
 
-    function getBranchesByRepositoryId(id){
+    function getBranchesByRepositoryId(id) {
       return request('repositories/' + id + '/branches');
     }
 

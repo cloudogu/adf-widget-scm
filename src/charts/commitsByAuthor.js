@@ -25,7 +25,7 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsByAuthorController', function(config, repository, commitsByAuthor){
+  .controller('CommitsByAuthorController', function (config, repository, commitsByAuthor) {
     var vm = this;
 
     if (repository && commitsByAuthor) {
@@ -37,7 +37,7 @@ angular.module('adf.widget.scm')
 
       angular.forEach(commitsByAuthor.author, function (entry) {
         var author = entry.value;
-        data[author]= entry.count;
+        data[author] = entry.count;
       });
 
       var options = {

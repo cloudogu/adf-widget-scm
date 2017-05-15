@@ -1,7 +1,9 @@
 <form role="form">
   <div class="form-group">
     <p><label for="repository">Repository</label>
-      <select name="repository" id="repository" class="form-control" ng-model="config.repository" ng-init="vm.getBranchesByRepositoryId(config.repository)" ng-change="vm.getBranchesByRepositoryId(config.repository)">
+      <select name="repository" id="repository" class="form-control" ng-model="config.repository"
+              ng-init="vm.getBranchesByRepositoryId(config.repository)"
+              ng-change="vm.getBranchesByRepositoryId(config.repository)">
         <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">
           {{repository.name}}
         </option>

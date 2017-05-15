@@ -40,7 +40,7 @@ angular.module('adf.widget.scm')
               id: 'y-axis-1',
               display: true,
               position: 'left',
-              ticks: { fixedStepSize: 1 },
+              ticks: {fixedStepSize: 1},
               scaleLabel: {
                 display: true,
                 labelString: 'Commits'
