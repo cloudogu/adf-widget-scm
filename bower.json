@@ -23,7 +23,7 @@
   ],
   "description": "SCM-Manager related widgets",
   "dependencies": {
-    "angular": ">=1.4 <=1.6",
+    "angular": ">=1.4 <=1.6.4",
     "angular-dashboard-framework": "v0.12.x",
     "angular-chart.js": "^1.1.0",
     "angular-markdown-directive": "^0.3.1"
