@@ -92,7 +92,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js', 'ngSanitize', 'btf
         edit: edit
       })
       .widget('scm-commits-last-commits', {
-        title: 'SCM Commits line chart',
+        title: 'SCM Last Commit Chart',
         description: 'Displays line chart for the last 50 commits',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
