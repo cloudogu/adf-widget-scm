@@ -33,12 +33,29 @@ angular.module('adf.widget.scm')
     }
 
     function createChart() {
+      var options = {
+        scales: {
+          yAxes: [
+            {
+              id: 'y-axis-1',
+              display: true,
+              position: 'left',
+              ticks: { fixedStepSize: 1 },
+              scaleLabel: {
+                display: true,
+                labelString: 'Commits'
+              }
+            }
+          ]
+        }
+      };
       var chartData = [];
       var chart = {
         labels: [],
         data: [chartData],
         series: ["Commits"],
-        class: "chart-line"
+        class: "chart-line",
+        options: options
       };
 
       var data = {};
@@ -57,7 +74,6 @@ angular.module('adf.widget.scm')
       });
 
       angular.forEach(data, function(entry) {
-        console.log(entry);
         chart.labels.push(entry.date);
         chartData.push(entry.count);
       });
