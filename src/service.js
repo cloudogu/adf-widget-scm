@@ -57,11 +57,16 @@ angular.module('adf.widget.scm')
       });
     }
 
+    function getActivities(){
+      return request('activity.json');
+    }
+
     return {
       getRepositories: getRepositories,
       getRepository: getRepository,
       getCommitsByAuthor: getCommitsByAuthor,
       getCommitsByMonth: getCommitsByMonth,
-      getCommits: getCommits
+      getCommits: getCommits,
+      getActivities: getActivities
     };
   });

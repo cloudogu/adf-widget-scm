@@ -25,23 +25,28 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsController', function($sce, config, repository, commits){
+  .controller('ActivitiesController', function($sce, activities){
     var vm = this;
-
-    vm.repository = repository;
-
-    // allow html descriptions
-    angular.forEach(commits, function(commit){
-      commit.description = $sce.trustAsHtml(commit.description);
-    });
-    vm.commits = commits;
     
-    vm.gravatarHash = function(commit){
+    // allow html descriptions
+    angular.forEach(activities.activities, function(activity){
+      activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
+      activity.repoName = activity["repository-name"];
+    });
+    
+    // handling and displaying only 15 activities
+    vm.activities=[];
+    for(var i=0; i<15; i++){
+         vm.activities[i] = activities.activities[i];
+    }
+    // vm.activities = activities.activities;
+
+    vm.gravatarHash = function(activity){
       var hash;
-      if (commit.properties){
-        for (var i=0; i<commit.properties.length; i++){
-          if (commit.properties[0].key === 'gravatar-hash'){
-            hash = commit.properties[0].value;
+      if (activity.changeset.properties){
+        for (var i=0; i<activity.changeset.properties.length; i++){
+          if (activity.changeset.properties[0].key === 'gravatar-hash'){
+               hash = activity.changeset.properties[0].value;
             break;
           }
         }

@@ -130,5 +130,21 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
           }
         },
         edit: edit
+      })
+       .widget('scm-activities', {
+        title: 'SCM Activities',
+        description: 'SCM Activities for all repositories',
+        category: category,
+        templateUrl: '{widgetsPath}/scm/src/activities/activityView.html',
+        controller: 'ActivitiesController',
+        controllerAs: 'vm',
+        reload: true,
+        resolve: {
+          activities: function(SCM){
+            var result = null;
+            result = SCM.getActivities();
+            return result;
+          }
+        }
       });
   });
