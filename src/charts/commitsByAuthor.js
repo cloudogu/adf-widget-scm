@@ -40,11 +40,19 @@ angular.module('adf.widget.scm')
         data[author]= entry.count;
       });
 
+      var options = {
+        legend: {
+          display: true,
+          position: "bottom"
+        }
+      };
+
       var chart = {
         labels: [],
         data: [],
         series: ["Commits"],
-        class: "chart-pie"
+        class: "chart-pie",
+        options: options
       };
 
       angular.forEach(data, function (count, author) {
