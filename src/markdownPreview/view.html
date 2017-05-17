@@ -9,3 +9,6 @@
 </div>
 <div ng-if="vm.fileContent" btf-markdown="vm.fileContent" class="markdownContent">
 </div>
+<div class="alert alert-danger" ng-if="vm.fileContent.status == 500">
+  Markdown-File not found. Please check your configuration and try again.
+</div>
