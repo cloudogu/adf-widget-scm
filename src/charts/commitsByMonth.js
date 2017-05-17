@@ -27,6 +27,8 @@
 angular.module('adf.widget.scm')
   .controller('CommitsByMonthController', function (config, repository, commitsByMonth) {
     var vm = this;
+    vm.repository = repository;
+
     if (commitsByMonth) {
       vm.chart = createChart();
     }

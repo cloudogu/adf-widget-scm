@@ -2,10 +2,15 @@
   <div class="alert alert-info" ng-if="!vm.chart">
     Please insert a repository path in the widget configuration
   </div>
+  <div ng-if="vm.repository.status == 404 || vm.repository.status == 500" class="alert alert-danger">
+    <b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist
+    or that the statistics plugin is not installed
+  </div>
   <div ng-if="vm.chart">
     <canvas id="line" class="chart chart-line"
             chart-data="vm.chart.data" chart-labels="vm.chart.labels"
             chart-series="vm.chart.series" chart-options="vm.chart.options">
     </canvas>
   </div>
+
 </div>

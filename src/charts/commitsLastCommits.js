@@ -27,6 +27,7 @@
 angular.module('adf.widget.scm')
   .controller('LastCommitsController', function ($filter, config, repository, commits) {
     var vm = this;
+    vm.repository = repository;
 
     if (repository && commits) {
       vm.chart = createChart();

@@ -27,6 +27,7 @@
 angular.module('adf.widget.scm')
   .controller('CommitsByAuthorController', function (config, repository, commitsByAuthor) {
     var vm = this;
+    vm.repository = repository;
 
     if (repository && commitsByAuthor) {
       vm.chart = createChart();
