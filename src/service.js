@@ -26,12 +26,15 @@
 
 angular.module('adf.widget.scm')
   .factory('SCM', function (scmEndpoint, $http) {
-    function data(response) {
-      return response.data;
-    }
 
     function request(url) {
-      return $http.get(scmEndpoint + url).then(data);
+      return $http.get(scmEndpoint + url).then(function (response) {
+        if (response.status == 200) {
+          return response.data;
+        }
+      }, function (error) {
+        return error;
+      });
     }
 
     function getRepositories() {

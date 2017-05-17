@@ -9,7 +9,8 @@
         </option>
       </select>
     </p>
-    <p ng-if="config.repository"><label for="branch">Branch</label>
+
+    <p ng-if="vm.branches"><label for="branch">Branch</label>
       <select name="branch" id="branch" class="form-control" ng-model="config.branch">
         <option ng-repeat="branch in vm.branches| orderBy: 'name'" value="{{branch.id}}">
           {{branch.name}}
