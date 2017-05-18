@@ -2,6 +2,9 @@
   <div ng-if="!config.repository" class="alert alert-info">
     Please configure a repository
   </div>
+  <div ng-if="vm.repository.status == 404 || vm.repository.status == 500" class="alert alert-danger">
+    <b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist
+  </div>
   <div ng-if="config.repository">
     <ul class="media-list">
       <li class="media" ng-repeat="commit in vm.commits">
@@ -16,4 +19,5 @@
       </li>
     </ul>
   </div>
+
 </div>
