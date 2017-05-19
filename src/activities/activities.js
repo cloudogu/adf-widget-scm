@@ -27,7 +27,7 @@
 angular.module('adf.widget.scm')
   .controller('ActivitiesController', function($sce, activities){
     var vm = this;
-    
+    console.log(activities);
     // allow html descriptions
     angular.forEach(activities.activities, function(activity){
       activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
@@ -35,11 +35,7 @@ angular.module('adf.widget.scm')
     });
     
     // handling and displaying only 15 activities
-    vm.activities=[];
-    for(var i=0; i<15; i++){
-         vm.activities[i] = activities.activities[i];
-    }
-    // vm.activities = activities.activities;
+    vm.activities = activities.activities.slice(0,15);
 
     vm.gravatarHash = function(activity){
       var hash;
