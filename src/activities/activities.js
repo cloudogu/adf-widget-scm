@@ -25,7 +25,7 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-        .controller('ActivitiesController', function ($sce, activities, VM) {
+        .controller('ActivitiesController', function ($sce, activities, SCM) {
             var vm = this;
             vm.status = activities.status;
 
@@ -41,6 +41,6 @@ angular.module('adf.widget.scm')
             }
 
             vm.gravatarHash = function (activity) {
-                return VM.getGravatarHash(activity.changeset.properties);
+                return SCM.getGravatarHash(activity.changeset.properties);
             };
         });

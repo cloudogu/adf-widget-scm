@@ -72,6 +72,19 @@ angular.module('adf.widget.scm')
       return request('repositories/' + id + '/branches');
     }
 
+    function getGravatarHash(properties) {
+        var hash;
+      if (properties){
+        for (var i=0; i<properties.length; i++){
+          if (properties[0].key === 'gravatar-hash'){
+               hash = properties[0].value;
+            break;
+          }
+        }
+      }
+      return hash;
+    }
+    
     return {
       getRepositories: getRepositories,
       getRepository: getRepository,
@@ -80,6 +93,7 @@ angular.module('adf.widget.scm')
       getCommits: getCommits,
       getActivities: getActivities,
       getFileContent: getFileContent,
-      getBranchesByRepositoryId: getBranchesByRepositoryId
+      getBranchesByRepositoryId: getBranchesByRepositoryId,
+      getGravatarHash: getGravatarHash
     };
   });

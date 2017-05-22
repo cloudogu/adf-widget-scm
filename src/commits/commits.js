@@ -25,7 +25,7 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-        .controller('CommitsController', function ($sce, config, repository, commits, VM) {
+        .controller('CommitsController', function ($sce, config, repository, commits, SCM) {
             var vm = this;
 
             vm.repository = repository;
@@ -37,6 +37,6 @@ angular.module('adf.widget.scm')
             vm.commits = commits;
 
             vm.gravatarHash = function (commit) {
-                return VM.getGravatarHash(commit.properties);
+                return SCM.getGravatarHash(commit.properties);
             };
         });
