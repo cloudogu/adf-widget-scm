@@ -1,0 +1,24 @@
+<form role="form">
+  <div class="form-group">
+    <p><label for="repository">Repository</label>
+      <select name="repository" id="repository" class="form-control" ng-model="config.repository"
+              ng-init="vm.getBranchesByRepositoryId(config.repository)"
+              ng-change="vm.getBranchesByRepositoryId(config.repository)">
+        <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">
+          {{repository.name}}
+        </option>
+      </select>
+    </p>
+
+    <p ng-if="vm.branches"><label for="branch">Branch</label>
+      <select name="branch" id="branch" class="form-control" ng-model="config.branch">
+        <option ng-repeat="branch in vm.branches| orderBy: 'name'" value="{{branch.id}}">
+          {{branch.name}}
+        </option>
+      </select>
+    </p>
+    <label for="path">Path to Markdown File</label>
+    <input type="text" class="form-control" id="path" ng-model="config.path">
+  </div>
+</form>
+

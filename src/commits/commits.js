@@ -25,27 +25,18 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsController', function($sce, config, repository, commits){
-    var vm = this;
+        .controller('CommitsController', function ($sce, config, repository, commits, VM) {
+            var vm = this;
 
-    vm.repository = repository;
+            vm.repository = repository;
 
-    // allow html descriptions
-    angular.forEach(commits, function(commit){
-      commit.description = $sce.trustAsHtml(commit.description);
-    });
-    vm.commits = commits;
-    
-    vm.gravatarHash = function(commit){
-      var hash;
-      if (commit.properties){
-        for (var i=0; i<commit.properties.length; i++){
-          if (commit.properties[0].key === 'gravatar-hash'){
-            hash = commit.properties[0].value;
-            break;
-          }
-        }
-      }
-      return hash;
-    };
-  });
+            // allow html descriptions
+            angular.forEach(commits, function (commit) {
+                commit.description = $sce.trustAsHtml(commit.description);
+            });
+            vm.commits = commits;
+
+            vm.gravatarHash = function (commit) {
+                return VM.getGravatarHash(commit.properties);
+            };
+        });

@@ -25,28 +25,46 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('LastCommitsController', function($filter, config, repository, commits){
+  .controller('LastCommitsController', function ($filter, config, repository, commits) {
     var vm = this;
+    vm.repository = repository;
 
     if (repository && commits) {
       vm.chart = createChart();
     }
 
     function createChart() {
+      var options = {
+        scales: {
+          yAxes: [
+            {
+              id: 'y-axis-1',
+              display: true,
+              position: 'left',
+              ticks: {fixedStepSize: 1},
+              scaleLabel: {
+                display: true,
+                labelString: 'Commits'
+              }
+            }
+          ]
+        }
+      };
       var chartData = [];
       var chart = {
         labels: [],
         data: [chartData],
         series: ["Commits"],
-        class: "chart-line"
+        class: "chart-line",
+        options: options
       };
 
       var data = {};
-      angular.forEach(commits, function(commit){
+      angular.forEach(commits, function (commit) {
         var date = new Date(commit.date);
         var key = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
         var entry = data[key];
-        if (entry){
+        if (entry) {
           entry.count += 1;
         } else {
           data[key] = {
@@ -56,8 +74,7 @@ angular.module('adf.widget.scm')
         }
       });
 
-      angular.forEach(data, function(entry) {
-        console.log(entry);
+      angular.forEach(data, function (entry) {
         chart.labels.push(entry.date);
         chartData.push(entry.count);
       });

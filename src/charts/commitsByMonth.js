@@ -25,27 +25,41 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsByMonthController', function(config, repository, commitsByMonth) {
+  .controller('CommitsByMonthController', function (config, repository, commitsByMonth) {
     var vm = this;
+    vm.repository = repository;
+
     if (commitsByMonth) {
       vm.chart = createChart();
     }
 
-    function parseDate(input) {
-      var parts = input.split('-');
-      return Date.UTC(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
-    }
-
     function createChart() {
       var chartData = [];
+      var options = {
+        scales: {
+          yAxes: [
+            {
+              id: 'y-axis-1',
+              display: true,
+              position: 'left',
+              ticks: {fixedStepSize: 1},
+              scaleLabel: {
+                display: true,
+                labelString: 'Commits'
+              }
+            }
+          ]
+        }
+      };
       var chart = {
         labels: [],
         data: [chartData],
         series: ["Commits"],
-        class: "chart-line"
+        class: "chart-line",
+        options: options
       };
 
-      angular.forEach(commitsByMonth.month, function(month) {
+      angular.forEach(commitsByMonth.month, function (month) {
         chart.labels.push(month.value);
         chartData.push(month.count);
       });

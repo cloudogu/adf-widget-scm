@@ -24,8 +24,8 @@
 
 'use strict';
 
-angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
-  .config(function(dashboardProvider){
+angular.module('adf.widget.scm', ['adf.provider', 'chart.js', 'ngSanitize', 'btford.markdown'])
+  .config(function (dashboardProvider) {
 
     // category for widget add dialog
     var category = 'SCM-Manager';
@@ -36,15 +36,15 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
       controllerAs: 'vm',
       resolve: {
         /** @ngInject **/
-        repositories: function(SCM){
+        repositories: function (SCM) {
           return SCM.getRepositories();
         }
       }
     };
 
-    var resolveRepository = function(SCM, config){
+    var resolveRepository = function (SCM, config) {
       var result = null;
-      if (config.repository){
+      if (config.repository) {
         result = SCM.getRepository(config.repository);
       }
       return result;
@@ -53,7 +53,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
     dashboardProvider
       .widget('scm-commits-by-author', {
         title: 'SCM Commits By Author',
-        description: 'SCM-Manager pie chart for commit count by author',
+        description: 'Displays pie chart for commit count by author',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/pie-chart.html',
         controller: 'CommitsByAuthorController',
@@ -61,9 +61,9 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
         reload: true,
         resolve: {
           repository: resolveRepository,
-          commitsByAuthor: function(SCM, config){
+          commitsByAuthor: function (SCM, config) {
             var result = null;
-            if (config.repository){
+            if (config.repository) {
               result = SCM.getCommitsByAuthor(config.repository);
             }
             return result;
@@ -73,7 +73,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
       })
       .widget('scm-commits-by-month', {
         title: 'SCM Commits By Month',
-        description: 'SCM-Manager line chart for commit count by month',
+        description: 'Displays line chart for commit count by month',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
         controller: 'CommitsByMonthController',
@@ -81,9 +81,9 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
         reload: true,
         resolve: {
           repository: resolveRepository,
-          commitsByMonth: function(SCM, config){
+          commitsByMonth: function (SCM, config) {
             var result = null;
-            if (config.repository){
+            if (config.repository) {
               result = SCM.getCommitsByMonth(config.repository);
             }
             return result;
@@ -92,8 +92,8 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
         edit: edit
       })
       .widget('scm-commits-last-commits', {
-        title: 'SCM Commits line chart',
-        description: 'SCM-Manager line char for the last 50 commits',
+        title: 'SCM Last Commit Chart',
+        description: 'Displays line chart for the last 50 commits',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/charts/line-chart.html',
         controller: 'LastCommitsController',
@@ -101,9 +101,9 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
         reload: true,
         resolve: {
           repository: resolveRepository,
-          commits: function(SCM, config){
+          commits: function (SCM, config) {
             var result = null;
-            if (config.repository){
+            if (config.repository) {
               result = SCM.getCommits(config.repository, 50);
             }
             return result;
@@ -113,7 +113,7 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
       })
       .widget('scm-commits', {
         title: 'SCM Commits',
-        description: 'SCM-Manager commits',
+        description: 'Displays last commits',
         category: category,
         templateUrl: '{widgetsPath}/scm/src/commits/view.html',
         controller: 'CommitsController',
@@ -121,9 +121,9 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
         reload: true,
         resolve: {
           repository: resolveRepository,
-          commits: function(SCM, config){
+          commits: function (SCM, config) {
             var result = null;
-            if (config.repository){
+            if (config.repository) {
               result = SCM.getCommits(config.repository, 10);
             }
             return result;
@@ -144,6 +144,35 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js'])
             var result = null;
             result = SCM.getActivities();
             return result;
+         }
+     }})
+      .widget('scm-markdown-content', {
+        title: 'SCM Markdown Content',
+        description: 'Displays a Markdown Content Preview',
+        category: category,
+        templateUrl: '{widgetsPath}/scm/src/markdownPreview/view.html',
+        controller: 'MarkdownPreviewController',
+        controllerAs: 'vm',
+        reload: true,
+        resolve: {
+          repository: resolveRepository,
+          fileContent: function (SCM, config) {
+            var result = null;
+            if (config.repository && config.path) {
+              result = SCM.getFileContent(config.repository, config.path);
+            }
+            return result;
+          }
+        },
+        edit: {
+          templateUrl: '{widgetsPath}/scm/src/markdownPreview/edit.html',
+          controller: 'MarkdownPreviewEditController',
+          controllerAs: 'vm',
+          resolve: {
+            /** @ngInject **/
+            repositories: function (SCM) {
+              return SCM.getRepositories();
+            }
           }
         }
       });

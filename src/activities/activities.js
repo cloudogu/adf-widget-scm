@@ -25,28 +25,22 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('ActivitiesController', function($sce, activities){
-    var vm = this;
-    console.log(activities);
-    // allow html descriptions
-    angular.forEach(activities.activities, function(activity){
-      activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
-      activity.repoName = activity["repository-name"];
-    });
-    
-    // handling and displaying only 15 activities
-    vm.activities = activities.activities.slice(0,15);
+        .controller('ActivitiesController', function ($sce, activities, VM) {
+            var vm = this;
+            vm.status = activities.status;
 
-    vm.gravatarHash = function(activity){
-      var hash;
-      if (activity.changeset.properties){
-        for (var i=0; i<activity.changeset.properties.length; i++){
-          if (activity.changeset.properties[0].key === 'gravatar-hash'){
-               hash = activity.changeset.properties[0].value;
-            break;
-          }
-        }
-      }
-      return hash;
-    };
-  });
+            // allow html descriptions
+            angular.forEach(activities.activities, function (activity) {
+                activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
+                activity.repoName = activity["repository-name"];
+            });
+
+            // handling and displaying only 15 activities
+            if (activities.activities) {
+                vm.activities = activities.activities.slice(0, 15);
+            }
+
+            vm.gravatarHash = function (activity) {
+                return VM.getGravatarHash(activity.changeset.properties);
+            };
+        });

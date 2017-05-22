@@ -25,42 +25,19 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('CommitsByAuthorController', function (config, repository, commitsByAuthor) {
-    var vm = this;
-    vm.repository = repository;
+  .service('VM', function () { 
 
-    if (repository && commitsByAuthor) {
-      vm.chart = createChart();
-    }
-
-    function createChart() {
-      var data = {};
-
-      angular.forEach(commitsByAuthor.author, function (entry) {
-        var author = entry.value;
-        data[author] = entry.count;
-      });
-
-      var options = {
-        legend: {
-          display: true,
-          position: "bottom"
+        this.getGravatarHash = function (properties) {
+        var hash;
+      if (properties){
+        for (var i=0; i<properties.length; i++){
+          if (properties[0].key === 'gravatar-hash'){
+               hash = properties[0].value;
+            break;
+          }
         }
-      };
-
-      var chart = {
-        labels: [],
-        data: [],
-        series: ["Commits"],
-        class: "chart-pie",
-        options: options
-      };
-
-      angular.forEach(data, function (count, author) {
-        chart.labels.push(author);
-        chart.data.push(count);
-      });
-
-      return chart;
+      }
+      return hash;
     }
+    
   });
