@@ -1,0 +1,23 @@
+<div>
+  <div ng-if="!vm.activities" class="alert alert-info">
+    There are no activities for your available repositories.
+  </div>
+  <div ng-if="vm.status == 404 || vm.status == 500" class="alert alert-danger">
+    <b>Error {{vm.status}}:</b> The endpoint could not be reached, this could mean that the activity plugin is not installed.
+  </div>
+    <div ng-if="vm.activities">
+    <ul class="media-list">
+      <li class="media" ng-repeat="activity in vm.activities">
+          <div ng-if="vm.gravatarHash(activity)" class="media-left">
+          <img class="media-object img-thumbnail" ng-src="http://www.gravatar.com/avatar/{{vm.gravatarHash(activity)}}?s=64&d=identicon" alt="">
+        </div>
+        <div class="media-body">
+          <!--h4 class="media-heading">Media heading</h4-->
+          <b>{{activity.repoName}}</b>
+          <p ng-bind-html="activity.changeset.description"></p>
+          <small>{{activity.changeset.author.name}}, {{activity.changeset.date | date: 'yyyy-MM-dd HH:mm'}}</small>
+        </div>
+      </li>
+    </ul>
+    </div>
+</div>

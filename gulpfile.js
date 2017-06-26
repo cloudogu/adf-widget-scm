@@ -36,7 +36,7 @@ var pkg = require('./package.json');
 // proxy stuff for scm-manager
 var url = require('url');
 var proxy = require('proxy-middleware');
-var scmUrl = 'http://localhost:8080/scm/api/rest'
+var scmUrl = 'http://localhost:8080/scm/api/rest';
 var scmCredentials = {
   user: 'scmadmin',
   password: 'scmadmin'

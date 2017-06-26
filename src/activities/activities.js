@@ -25,18 +25,22 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-        .controller('CommitsController', function ($sce, config, repository, commits, SCM) {
+        .controller('ActivitiesController', function ($sce, activities, SCM) {
             var vm = this;
-
-            vm.repository = repository;
+            vm.status = activities.status;
 
             // allow html descriptions
-            angular.forEach(commits, function (commit) {
-                commit.description = $sce.trustAsHtml(commit.description);
+            angular.forEach(activities.activities, function (activity) {
+                activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
+                activity.repoName = activity["repository-name"];
             });
-            vm.commits = commits;
 
-            vm.gravatarHash = function (commit) {
-                return SCM.getGravatarHash(commit.properties);
+            // handling and displaying only 15 activities
+            if (activities.activities) {
+                vm.activities = activities.activities.slice(0, 15);
+            }
+
+            vm.gravatarHash = function (activity) {
+                return SCM.getGravatarHash(activity.changeset.properties);
             };
         });
