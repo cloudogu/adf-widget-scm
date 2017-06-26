@@ -48,7 +48,12 @@ angular.module('adf.widget.scm')
               }
             }
           ]
-        }
+        },
+        legend: {
+          display: true,
+          position: "bottom"
+        },
+        responsive: true
       };
       var chartData = [];
       var chart = {
