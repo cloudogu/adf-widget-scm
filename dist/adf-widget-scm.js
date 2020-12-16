@@ -180,13 +180,44 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js', 'ngSanitize', 'btf
       });
   }]);
 
-angular.module("adf.widget.scm").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/scm/src/activities/activityView.html","<div><div ng-if=!vm.activities class=\"alert alert-info\">There are no activities for your available repositories.</div><div ng-if=\"vm.status == 404 || vm.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.status}}:</b> The endpoint could not be reached, this could mean that the activity plugin is not installed.</div><div ng-if=vm.activities><ul class=media-list><li class=media ng-repeat=\"activity in vm.activities\"><div ng-if=vm.gravatarHash(activity) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"http://www.gravatar.com/avatar/{{vm.gravatarHash(activity)}}?s=64&d=identicon\"></div><div class=media-body><b>{{activity.repoName}}</b><p ng-bind-html=activity.changeset.description></p><small>{{activity.changeset.author.name}}, {{activity.changeset.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
-$templateCache.put("{widgetsPath}/scm/src/edit/edit.html","<form role=form><div class=form-group><label for=repository>Repository</label><select name=repository id=repository class=form-control ng-model=config.repository><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></div></form>");
+angular.module("adf.widget.scm").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/scm/src/activities/activityView.html","<div><div ng-if=!vm.activities class=\"alert alert-info\">There are no activities for your available repositories.</div><div ng-if=\"vm.status == 404 || vm.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.status}}:</b> The endpoint could not be reached, this could mean that the activity plugin is not installed.</div><div ng-if=vm.activities><ul class=media-list><li class=media ng-repeat=\"activity in vm.activities\"><div ng-if=vm.gravatarHash(activity) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(activity)}}?s=64&d=identicon\"></div><div class=media-body><b>{{activity.repoName}}</b><p ng-bind-html=activity.changeset.description></p><small>{{activity.changeset.author.name}}, {{activity.changeset.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/charts/line-chart.html","<div><div class=\"alert alert-info\" ng-if=!vm.chart>Please insert a repository path in the widget configuration</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist or that the statistics plugin is not installed</div><div ng-if=vm.chart><canvas id=line class=\"chart chart-line\" chart-data=vm.chart.data chart-labels=vm.chart.labels chart-series=vm.chart.series chart-options=vm.chart.options></canvas></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/charts/pie-chart.html","<div><div class=\"alert alert-info\" ng-if=!vm.chart>Please insert a repository path in the widget configuration</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist or that the statistics plugin is not installed</div><div ng-if=vm.chart><canvas id=pie class=\"chart chart-pie\" chart-legend=true chart-data=vm.chart.data chart-labels=vm.chart.labels chart-options=vm.chart.options></canvas></div></div>");
+$templateCache.put("{widgetsPath}/scm/src/edit/edit.html","<form role=form><div class=form-group><label for=repository>Repository</label><select name=repository id=repository class=form-control ng-model=config.repository><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></div></form>");
+$templateCache.put("{widgetsPath}/scm/src/commits/view.html","<div><div ng-if=!config.repository class=\"alert alert-info\">Please configure a repository</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist</div><div ng-if=config.repository><ul class=media-list><li class=media ng-repeat=\"commit in vm.commits\"><div ng-if=vm.gravatarHash(commit) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(commit)}}?s=64&d=identicon\"></div><div class=media-body><p ng-bind-html=commit.description></p><small>{{commit.author.name}}, {{commit.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/markdownPreview/edit.html","<form role=form><div class=form-group><p><label for=repository>Repository</label><select name=repository id=repository class=form-control ng-model=config.repository ng-init=vm.getBranchesByRepositoryId(config.repository) ng-change=vm.getBranchesByRepositoryId(config.repository)><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></p><p ng-if=vm.branches><label for=branch>Branch</label><select name=branch id=branch class=form-control ng-model=config.branch><option ng-repeat=\"branch in vm.branches| orderBy: \'name\'\" value={{branch.id}}>{{branch.name}}</option></select></p><label for=path>Path to Markdown File</label> <input type=text class=form-control id=path ng-model=config.path></div></form>");
-$templateCache.put("{widgetsPath}/scm/src/markdownPreview/view.html","<style>\n  div.markdownContent{\n    overflow: auto;\n    width: 100%;\n  }\n</style><div class=\"alert alert-info\" ng-if=!vm.fileContent>Please configure a specific file</div><div ng-if=vm.fileContent btf-markdown=vm.fileContent class=markdownContent></div><div class=\"alert alert-danger\" ng-if=\"vm.fileContent.status == 500 || vm.fileContent.status == 404\"><b>Error {{vm.fileContent.status}}</b> Markdown-File not found. Please check your configuration and try again.</div>");
-$templateCache.put("{widgetsPath}/scm/src/commits/view.html","<div><div ng-if=!config.repository class=\"alert alert-info\">Please configure a repository</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist</div><div ng-if=config.repository><ul class=media-list><li class=media ng-repeat=\"commit in vm.commits\"><div ng-if=vm.gravatarHash(commit) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"http://www.gravatar.com/avatar/{{vm.gravatarHash(commit)}}?s=64&d=identicon\"></div><div class=media-body><p ng-bind-html=commit.description></p><small>{{commit.author.name}}, {{commit.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");}]);
+$templateCache.put("{widgetsPath}/scm/src/markdownPreview/view.html","<style>\n  div.markdownContent{\n    overflow: auto;\n    width: 100%;\n  }\n</style><div class=\"alert alert-info\" ng-if=!vm.fileContent>Please configure a specific file</div><div ng-if=vm.fileContent btf-markdown=vm.fileContent class=markdownContent></div><div class=\"alert alert-danger\" ng-if=\"vm.fileContent.status == 500 || vm.fileContent.status == 404\"><b>Error {{vm.fileContent.status}}</b> Markdown-File not found. Please check your configuration and try again.</div>");}]);
+
+
+angular.module('adf.widget.scm')
+  .controller('MarkdownPreviewEditController', ["repositories", "SCM", function (repositories, SCM) {
+    var vm = this;
+    vm.repositories = repositories;
+
+    vm.getBranchesByRepositoryId = function (repositoryId) {
+      if (repositoryId) {
+        SCM.getBranchesByRepositoryId(repositoryId).then(function (result) {
+          // catch repositories without branch support
+          if (result.status == 400)  {
+            vm.branches = null;
+          }else{
+            vm.branches = result.branch;
+          }
+        });
+      }
+    };
+
+  }]);
+
+
+
+angular.module('adf.widget.scm')
+  .controller('MarkdownPreviewController', ["repository", "fileContent", function (repository, fileContent) {
+    var vm = this;
+    vm.repository = repository;
+    vm.fileContent = fileContent;
+  }]);
+
 /*
  * The MIT License
  *
@@ -230,35 +261,37 @@ angular.module('adf.widget.scm')
             };
         }]);
 
+/*
+ * The MIT License
+ *
+ * Copyright (c) 2016, Sebastian Sdorra
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 
 
 angular.module('adf.widget.scm')
-  .controller('MarkdownPreviewEditController', ["repositories", "SCM", function (repositories, SCM) {
+  .controller('ScmEditController', ["repositories", function(repositories){
     var vm = this;
+
     vm.repositories = repositories;
-
-    vm.getBranchesByRepositoryId = function (repositoryId) {
-      if (repositoryId) {
-        SCM.getBranchesByRepositoryId(repositoryId).then(function (result) {
-          // catch repositories without branch support
-          if (result.status == 400)  {
-            vm.branches = null;
-          }else{
-            vm.branches = result.branch;
-          }
-        });
-      }
-    };
-
-  }]);
-
-
-
-angular.module('adf.widget.scm')
-  .controller('MarkdownPreviewController', ["repository", "fileContent", function (repository, fileContent) {
-    var vm = this;
-    vm.repository = repository;
-    vm.fileContent = fileContent;
   }]);
 
 /*
@@ -495,39 +528,6 @@ angular.module('adf.widget.scm')
 
       return chart;
     }
-  }]);
-
-/*
- * The MIT License
- *
- * Copyright (c) 2016, Sebastian Sdorra
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-
-
-angular.module('adf.widget.scm')
-  .controller('ScmEditController', ["repositories", function(repositories){
-    var vm = this;
-
-    vm.repositories = repositories;
   }]);
 
 /*
