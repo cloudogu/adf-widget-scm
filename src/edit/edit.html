@@ -1,5 +1,6 @@
 <form role="form">
   <div class="form-group">
+    <span class="grey glyphicon glyphicon-info-sign ng-scope" uib-tooltip-html="repositoryTooltip" tooltip-trigger="'outsideClick'" tooltip-is-open="tooltipIsOpenRepo" ng-mouseover="tooltipIsOpenRepo = !tooltipIsOpenRepo" tooltip-placement="bottom" aria-label="A valid URL to your Jenkins server must be stored here"></span>
     <label for="repository">Repository</label>
     <select name="repository" id="repository" class="form-control" ng-model="config.repository">
       <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">{{repository.name}}</option>
