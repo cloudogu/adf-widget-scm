@@ -181,11 +181,11 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js', 'ngSanitize', 'btf
   }]);
 
 angular.module("adf.widget.scm").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/scm/src/activities/activityView.html","<div><div ng-if=!vm.activities class=\"alert alert-info\">There are no activities for your available repositories.</div><div ng-if=\"vm.status == 404 || vm.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.status}}:</b> The endpoint could not be reached, this could mean that the activity plugin is not installed.</div><div ng-if=vm.activities><ul class=media-list><li class=media ng-repeat=\"activity in vm.activities\"><div ng-if=vm.gravatarHash(activity) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(activity)}}?s=64&d=identicon\"></div><div class=media-body><b>{{activity.repoName}}</b><p ng-bind-html=activity.changeset.description></p><small>{{activity.changeset.author.name}}, {{activity.changeset.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
+$templateCache.put("{widgetsPath}/scm/src/commits/view.html","<div><div ng-if=!config.repository class=\"alert alert-info\">Please configure a repository</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist</div><div ng-if=config.repository><ul class=media-list><li class=media ng-repeat=\"commit in vm.commits\"><div ng-if=vm.gravatarHash(commit) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(commit)}}?s=64&d=identicon\"></div><div class=media-body><p ng-bind-html=commit.description></p><small>{{commit.author.name}}, {{commit.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/charts/line-chart.html","<div><div class=\"alert alert-info\" ng-if=!vm.chart>Please insert a repository path in the widget configuration</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist or that the statistics plugin is not installed</div><div ng-if=vm.chart><canvas id=line class=\"chart chart-line\" chart-data=vm.chart.data chart-labels=vm.chart.labels chart-series=vm.chart.series chart-options=vm.chart.options></canvas></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/charts/pie-chart.html","<div><div class=\"alert alert-info\" ng-if=!vm.chart>Please insert a repository path in the widget configuration</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist or that the statistics plugin is not installed</div><div ng-if=vm.chart><canvas id=pie class=\"chart chart-pie\" chart-legend=true chart-data=vm.chart.data chart-labels=vm.chart.labels chart-options=vm.chart.options></canvas></div></div>");
-$templateCache.put("{widgetsPath}/scm/src/commits/view.html","<div><div ng-if=!config.repository class=\"alert alert-info\">Please configure a repository</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist</div><div ng-if=config.repository><ul class=media-list><li class=media ng-repeat=\"commit in vm.commits\"><div ng-if=vm.gravatarHash(commit) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(commit)}}?s=64&d=identicon\"></div><div class=media-body><p ng-bind-html=commit.description></p><small>{{commit.author.name}}, {{commit.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
-$templateCache.put("{widgetsPath}/scm/src/edit/edit.html","<form role=form><div class=form-group><span class=\"grey glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=repositoryTooltip tooltip-trigger=\"\'outsideClick\'\" tooltip-is-open=tooltipIsOpenRepo ng-mouseover=\"tooltipIsOpenRepo = !tooltipIsOpenRepo\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span> <label for=repository>Repository</label><select name=repository id=repository class=form-control ng-model=config.repository><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></div></form>");
-$templateCache.put("{widgetsPath}/scm/src/markdownPreview/edit.html","<form role=form><div class=form-group><p><span class=\"grey glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=repositoryTooltip tooltip-trigger=\"\'outsideClick\'\" tooltip-is-open=tooltipIsOpenRepo ng-mouseover=\"tooltipIsOpenRepo = !tooltipIsOpenRepo\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span> <label for=repository>Repository</label><select name=repository id=repository class=form-control ng-model=config.repository ng-init=vm.getBranchesByRepositoryId(config.repository) ng-change=vm.getBranchesByRepositoryId(config.repository)><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></p><p ng-if=vm.branches><label for=branch>Branch</label> <span class=\"grey glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=branchesTooltip tooltip-trigger=\"\'outsideClick\'\" tooltip-is-open=tooltipIsOpenBranch ng-mouseover=\"tooltipIsOpenBranch = !tooltipIsOpenBranch\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span> <span ng-if=!vm.url class=\"grey glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=connectionSetupTooltip tooltip-trigger=\"\'outsideClick\'\" tooltip-is-open=tooltipIsOpen ng-mouseover=\"tooltipIsOpen = !tooltipIsOpen\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span><select name=branch id=branch class=form-control ng-model=config.branch><option ng-repeat=\"branch in vm.branches| orderBy: \'name\'\" value={{branch.id}}>{{branch.name}}</option></select></p><span class=\"grey glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=pathToMarkdownFileTooltip tooltip-trigger=\"\'outsideClick\'\" tooltip-is-open=tooltipIsOpenFile ng-mouseover=\"tooltipIsOpenFile = !tooltipIsOpenFile\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span> <label for=path>Path to Markdown File</label> <input type=text class=form-control id=path ng-model=config.path></div></form>");
+$templateCache.put("{widgetsPath}/scm/src/edit/edit.html","<form role=form><div class=form-group><label for=repository>Repository</label> <span class=\"grey glyphicon glyphicon-info-sign ng-scope\" tabindex=0 ng-focus=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" tooltip-trigger=outsideClick tooltip-is-open=repositoryTooltipIsOpen ng-mouseenter=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" uib-tooltip-html=repositoryTooltip ng-mouseover=\"tooltipIsOpenRepo = !tooltipIsOpenRepo\" tooltip-placement=top aria-label=\"A valid URL to your Jenkins server must be stored here\"></span><select name=repository id=repository class=form-control ng-model=config.repository required><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></div></form>");
+$templateCache.put("{widgetsPath}/scm/src/markdownPreview/edit.html","<form role=form><div class=form-group><p><label for=repository>Repository</label> <span class=\"grey glyphicon glyphicon-info-sign ng-scope\" tabindex=0 ng-focus=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" tooltip-trigger=outsideClick tooltip-is-open=repositoryTooltipIsOpen ng-mouseenter=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" uib-tooltip-html=repositoryTooltip ng-mouseover=\"tooltipIsOpenRepo = !tooltipIsOpenRepo\" tooltip-placement=top aria-label=\"A valid URL to your Jenkins server must be stored here\"></span><select name=repository id=repository class=form-control ng-model=config.repository ng-init=vm.getBranchesByRepositoryId(config.repository) ng-change=vm.getBranchesByRepositoryId(config.repository)>required<option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></p><p ng-if=vm.branches><span class=\"grey glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=branchesTooltip tooltip-trigger=\"\'outsideClick\'\" tooltip-is-open=tooltipIsOpenBranch ng-mouseover=\"tooltipIsOpenBranch = !tooltipIsOpenBranch\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span> <label for=branch>Branch</label> <span class=\"grey glyphicon glyphicon-info-sign ng-scope\" tabindex=0 ng-focus=\"branchTooltipIsOpen = !branchTooltipIsOpen\" tooltip-trigger=outsideClick tooltip-is-open=branchTooltipIsOpen ng-mouseenter=\"branchTooltipIsOpen = !branchTooltipIsOpen\" uib-tooltip-html=branchTooltip ng-mouseover=\"tooltipIsOpenRepo = !tooltipIsOpenRepo\" tooltip-placement=top aria-label=\"A valid URL to your Jenkins server must be stored here\"></span><select name=branch id=branch class=form-control ng-model=config.branch required><option ng-repeat=\"branch in vm.branches| orderBy: \'name\'\" value={{branch.id}}>{{branch.name}}</option></select></p><label for=path>Path to Markdown File</label> <span class=\"grey glyphicon glyphicon-info-sign ng-scope\" tabindex=0 ng-focus=\"pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen\" tooltip-trigger=outsideClick tooltip-is-open=pathToMarkdownTooltipIsOpen ng-mouseenter=\"pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen\" uib-tooltip-html=pathToMarkdownFileTooltip ng-mouseover=\"tooltipIsOpenFile = !tooltipIsOpenFile\" tooltip-placement=bottom aria-label=\"A valid URL to your Jenkins server must be stored here\"></span> <input type=text class=form-control id=path ng-model=config.path required></div></form>");
 $templateCache.put("{widgetsPath}/scm/src/markdownPreview/view.html","<style>\n  div.markdownContent{\n    overflow: auto;\n    width: 100%;\n  }\n</style><div class=\"alert alert-info\" ng-if=\"vm.fileContent === null\">Please configure a specific file</div><div ng-if=vm.fileContent btf-markdown=vm.fileContent class=markdownContent></div><div class=\"alert alert-danger\" ng-if=\"vm.fileContent.status == 500 || vm.fileContent.status == 404\"><b>Error {{vm.fileContent.status}}</b> The Markdown file was not found. This may be because the file does not exist or the SCM Manager is not available at the moment.</div>");}]);
 
 
@@ -195,10 +195,9 @@ angular.module('adf.widget.scm')
     vm.repositories = repositories;
 
     // tooltip for project
-    $scope.pathToMarkdownFileTooltip = $sce.trustAsHtml('The path where the Markdown file can be found within the repository (e.g. "docs/File.md").');
-    $scope.branchesTooltip = $sce.trustAsHtml('Select the branch where the desired Markdown file can be found.');
-    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository where the desired Markdown file can be found.');
-
+    $scope.pathToMarkdownFileTooltip = $sce.trustAsHtml('The path where the Markdown file can be found within the repository (e.g. <b>docs/File.md</b>).');
+    $scope.branchesTooltip = $sce.trustAsHtml('Select the branch on which the desired Markdown file can be found.');
+    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository which stores the desired Markdown.');
 
     vm.getBranchesByRepositoryId = function (repositoryId) {
       if (repositoryId) {
@@ -254,53 +253,10 @@ angular.module('adf.widget.scm')
   .controller('ScmEditController', ["repositories", "$scope", "$sce", function(repositories, $scope, $sce){
     var vm = this;
 
-    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository which should be used to provide data.');
+    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository which is used to provide data.');
 
     vm.repositories = repositories;
   }]);
-
-/*
- * The MIT License
- *
- * Copyright (c) 2016, Sebastian Sdorra
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-
-
-angular.module('adf.widget.scm')
-        .controller('CommitsController', ["$sce", "config", "repository", "commits", "SCM", function ($sce, config, repository, commits, SCM) {
-            var vm = this;
-
-            vm.repository = repository;
-
-            // allow html descriptions
-            angular.forEach(commits, function (commit) {
-                commit.description = $sce.trustAsHtml(commit.description);
-            });
-            vm.commits = commits;
-
-            vm.gravatarHash = function (commit) {
-                return SCM.getGravatarHash(commit.properties);
-            };
-        }]);
 
 /*
  * The MIT License
@@ -565,6 +521,49 @@ angular.module('adf.widget.scm')
 
 
 angular.module('adf.widget.scm')
+        .controller('CommitsController', ["$sce", "config", "repository", "commits", "SCM", function ($sce, config, repository, commits, SCM) {
+            var vm = this;
+
+            vm.repository = repository;
+
+            // allow html descriptions
+            angular.forEach(commits, function (commit) {
+                commit.description = $sce.trustAsHtml(commit.description);
+            });
+            vm.commits = commits;
+
+            vm.gravatarHash = function (commit) {
+                return SCM.getGravatarHash(commit.properties);
+            };
+        }]);
+
+/*
+ * The MIT License
+ *
+ * Copyright (c) 2016, Sebastian Sdorra
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+
+
+angular.module('adf.widget.scm')
         .controller('ActivitiesController', ["$sce", "activities", "SCM", function ($sce, activities, SCM) {
             var vm = this;
             vm.status = activities.status;
@@ -572,7 +571,7 @@ angular.module('adf.widget.scm')
             // allow html descriptions
             angular.forEach(activities.activities, function (activity) {
                 activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
-                activity.repoName = activity["repository-name"];
+                activity.repoName = activity['repository-name'];
             });
 
             // handling and displaying only 15 activities
@@ -584,6 +583,7 @@ angular.module('adf.widget.scm')
                 return SCM.getGravatarHash(activity.changeset.properties);
             };
         }]);
+
 /*
  * The MIT License
  *
@@ -615,7 +615,7 @@ angular.module('adf.widget.scm')
 
     function request(url) {
       return $http.get(scmEndpoint + url).then(function (response) {
-        if (response.status == 200) {
+        if (response.status === 200) {
           return response.data;
         }
       }, function (error) {
@@ -670,7 +670,7 @@ angular.module('adf.widget.scm')
       }
       return hash;
     }
-    
+
     return {
       getRepositories: getRepositories,
       getRepository: getRepository,
