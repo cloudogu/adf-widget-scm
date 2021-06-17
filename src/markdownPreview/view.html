@@ -4,12 +4,12 @@
     width: 100%;
   }
 </style>
-<div class="alert alert-info" ng-if="!vm.fileContent">
+<div class="alert alert-info" ng-if="vm.fileContent === null">
   Please configure a specific file
 </div>
 <div ng-if="vm.fileContent" btf-markdown="vm.fileContent" class="markdownContent">
 </div>
 <div class="alert alert-danger" ng-if="vm.fileContent.status == 500 || vm.fileContent.status == 404">
-  <b>Error {{vm.fileContent.status}}</b> Markdown-File not found. Please check your configuration and try again.
+  <b>Error {{vm.fileContent.status}}</b> The Markdown file was not found. This may be because the file does not exist or the SCM Manager is not available at the moment.
 </div>
 
