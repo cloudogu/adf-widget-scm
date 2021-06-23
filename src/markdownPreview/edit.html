@@ -10,7 +10,7 @@
             aria-label="A valid URL to your Jenkins server must be stored here"></span>
       <select name="repository" id="repository" class="form-control" ng-model="config.repository"
               ng-init="vm.getBranchesByRepositoryId(config.repository)"
-              ng-change="vm.getBranchesByRepositoryId(config.repository)" required>
+              ng-change="vm.getBranchesByRepositoryId(config.repository)">
         <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">
           {{repository.name}}
         </option>
@@ -25,21 +25,23 @@
             ng-mouseover="branchTooltipIsOpen = !branchTooltipIsOpen" tooltip-placement="top"
             tooltip-is-open="branchTooltipIsOpen"
             aria-label="A valid URL to your Jenkins server must be stored here"></span>
-      <select name="branch" id="branch" class="form-control" ng-model="config.branch" required>
+      <select name="branch" id="branch" class="form-control" ng-model="config.branch">
         <option ng-repeat="branch in vm.branches| orderBy: 'name'" value="{{branch.id}}">
           {{branch.name}}
         </option>
       </select>
     </p>
 
-    <label for="path">Path to Markdown File</label>
-    <span class="grey glyphicon glyphicon-info-sign ng-scope" tabindex="0"
-          ng-focus="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen" tooltip-trigger="outsideClick"
-          uib-tooltip-html="pathToMarkdownTooltip" tooltip-trigger="'outsideClick'"
-          ng-mouseover="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen"
-          tooltip-is-open="pathToMarkdownTooltipIsOpen"
-          tooltip-placement="top" aria-label="A valid URL to your Jenkins server must be stored here"></span>
-    <input type="text" class="form-control" id="path" ng-model="config.path" required>
+    <p>
+      <label for="path">Path to Markdown File</label>
+      <span class="grey glyphicon glyphicon-info-sign ng-scope" tabindex="0"
+            ng-focus="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen" tooltip-trigger="outsideClick"
+            uib-tooltip-html="pathToMarkdownTooltip" tooltip-trigger="'outsideClick'"
+            ng-mouseover="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen"
+            tooltip-is-open="pathToMarkdownTooltipIsOpen"
+            tooltip-placement="top" aria-label="A valid URL to your Jenkins server must be stored here"></span>
+      <input type="text" class="form-control" id="path" ng-model="config.path" required>
+    </p>
   </div>
 </form>
 
