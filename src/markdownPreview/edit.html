@@ -31,15 +31,14 @@
         </option>
       </select>
     </p>
-
-    <p>
+    <p ng-if="vm.branches">
       <label for="path">Path to Markdown File</label>
       <span class="grey glyphicon glyphicon-info-sign ng-scope" tabindex="0"
             ng-focus="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen" tooltip-trigger="outsideClick"
             uib-tooltip-html="pathToMarkdownTooltip" tooltip-trigger="'outsideClick'"
             ng-mouseover="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen"
             tooltip-is-open="pathToMarkdownTooltipIsOpen"
-            tooltip-placement="top" aria-label="A valid URL to your Jenkins server must be stored here"></span>
+            tooltip-placement="top" aria-label="A valid path to a markdown file must be stored here"></span>
       <input type="text" class="form-control" id="path" ng-model="config.path" required>
     </p>
   </div>
