@@ -14,7 +14,7 @@ angular.module('adf.widget.scm')
       if (repositoryId) {
         SCM.getBranchesByRepositoryId(repositoryId).then(function (result) {
           // catch repositories without branch support
-          if (result.status === 400)  {
+          if (result.status == 400)  {
             vm.branches = null;
           }else{
             vm.branches = result.branch;
