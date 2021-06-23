@@ -8,7 +8,7 @@ angular.module('adf.widget.scm')
     // tooltips
     $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository which stores the desired Markdown.');
     $scope.branchTooltip = $sce.trustAsHtml('Select the branch on which the desired Markdown file can be found.');
-    $scope.pathToMarkdownTooltip = $sce.trustAsHtml('The path where the Markdown file can be found within the repository (e.g. <b>docs/File.md</b>).');
+    $scope.pathToMarkdownTooltip = $sce.trustAsHtml('The path where the Markdown file can be found within the repository (e.g. <b>docs/README.md</b>). Note that the path is case sensitive. For files in the root dir of the repository add <b>NO</b> leading slash.');
 
     vm.getBranchesByRepositoryId = function (repositoryId) {
       if (repositoryId) {
