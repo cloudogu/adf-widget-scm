@@ -2,7 +2,7 @@
 
 angular.module('adf.widget.scm')
   .controller('MarkdownPreviewEditController', function (repositories, SCM, $scope, $sce) {
-    var vm = this;
+    const vm = this;
     vm.repositories = repositories;
 
     // tooltips
