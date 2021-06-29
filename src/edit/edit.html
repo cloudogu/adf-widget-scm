@@ -1,11 +1,14 @@
 <form role="form">
   <div class="form-group">
     <label for="repository">Repository</label>
-    <span class="grey glyphicon glyphicon-info-sign ng-scope" tabindex="0"
-          ng-focus="repositoryTooltipIsOpen = !repositoryTooltipIsOpen" tooltip-trigger="outsideClick"
-          tooltip-is-open="repositoryTooltipIsOpen" ng-mouseenter="repositoryTooltipIsOpen = !repositoryTooltipIsOpen"
-          uib-tooltip-html="repositoryTooltip" tooltip-trigger="'outsideClick'" tooltip-is-open="tooltipIsOpenRepo"
-          ng-mouseover="tooltipIsOpenRepo = !tooltipIsOpenRepo" tooltip-placement="top"
+    <span class="grey glyphicon glyphicon-info-sign ng-scope"
+          uib-tooltip-html="repositoryTooltip"
+          tooltip-is-open="repositoryTooltipIsOpen"
+          tabindex="0"
+          ng-focus="repositoryTooltipIsOpen = !repositoryTooltipIsOpen"
+          tooltip-trigger="outsideClick"
+          ng-mouseover="repositoryTooltipIsOpen = !repositoryTooltipIsOpen"
+          tooltip-placement="top"
           aria-label="Select a repository"></span>
     <select name="repository" id="repository" class="form-control" ng-model="config.repository" required>
       <option ng-repeat="repository in vm.repositories | orderBy: 'name'" value="{{repository.id}}">
