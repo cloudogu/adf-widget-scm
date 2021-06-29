@@ -24,9 +24,23 @@
 
 'use strict';
 
-angular.module('adf.widget.scm')
-  .factory('SCM', function (scmEndpoint, $http) {
 
+/**
+ * when enabling the dev_mode you have to hash youre username and pw with base64
+ * "user:pw" --> hasehdPW213asd2
+ * and set the constant DEV_BASIC64_AUTH with it. Make sure to NOT commit youre dev pw and set DEV_MODE to false
+ * @type {boolean}
+ */
+const DEV_MODE = true; //TODO: wie kann ich vernünftig integrireren
+const DEV_BASIC64_AUTH = ''
+
+angular.module('adf.widget.scm')
+  .config(function($httpProvider) {
+    if(DEV_MODE) {
+      $httpProvider.defaults.headers.common['Authorization'] = 'Basic ' + DEV_BASIC64_AUTH;
+    }
+  })
+  .factory('SCM', function (scmEndpoint, $http) {
     function request(url) {
       return $http.get(scmEndpoint + url).then(function (response) {
         if (response.status == 200) {
@@ -84,7 +98,7 @@ angular.module('adf.widget.scm')
       }
       return hash;
     }
-    
+
     return {
       getRepositories: getRepositories,
       getRepository: getRepository,

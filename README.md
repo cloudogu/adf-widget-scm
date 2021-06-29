@@ -67,3 +67,14 @@ Define a dependency for the module:
 ```javascript
 angular.module('sample', ['adf', 'adf.widget.scm']);
 ```
+
+### Development
+
+* Build a base64 hash from username:password and put it into the `DEV_BASIC64_AUTH` constant in `src/service.js`.
+* In the `sample/index.html` set the constant `scmEndpoint` to whereever your SCM runs.
+* run `gulp serve`
+* run `google-chrome --disable-web-security --user-data-dir=~/chromeTemp`
+
+A new google-chrome window should appear and if everything is configured correctly the local development server can reach out to scm, 
+thus its widgets load data.
+

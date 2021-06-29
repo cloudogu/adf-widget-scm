@@ -33,15 +33,6 @@ var jsReporter = require('jshint-stylish');
 var annotateAdfPlugin = require('ng-annotate-adf-plugin');
 var pkg = require('./package.json');
 
-// proxy stuff for scm-manager
-var url = require('url');
-var proxy = require('proxy-middleware');
-var scmUrl = 'http://localhost:8080/scm/api/rest';
-var scmCredentials = {
-  user: 'scmadmin',
-  password: 'scmadmin'
-};
-
 var annotateOptions = {
   plugin: [
     annotateAdfPlugin
@@ -55,114 +46,97 @@ var templateOptions = {
 
 /** lint **/
 
-gulp.task('csslint', function(){
+gulp.task('csslint', function () {
   gulp.src('src/**/*.css')
-      .pipe($.csslint())
-      .pipe($.csslint.reporter());
+    .pipe($.csslint())
+    .pipe($.csslint.reporter());
 });
 
-gulp.task('jslint', function(){
+gulp.task('jslint', function () {
   gulp.src('src/**/*.js')
-      .pipe($.jshint())
-      .pipe($.jshint.reporter(jsReporter));
+    .pipe($.jshint())
+    .pipe($.jshint.reporter(jsReporter));
 });
 
-gulp.task('lint', ['csslint', 'jslint']);
+gulp.task('lint', gulp.series('csslint', 'jslint'));
 
 /** serve **/
 
-gulp.task('templates', function(){
+gulp.task('templates', function () {
   return gulp.src('src/**/*.html')
-             .pipe($.angularTemplatecache('templates.tpl.js', templateOptions))
-             .pipe(gulp.dest('.tmp/dist'));
+    .pipe($.angularTemplatecache('templates.tpl.js', templateOptions))
+    .pipe(gulp.dest('.tmp/dist'));
 });
 
-gulp.task('sample', ['templates'], function(){
+gulp.task('sample', gulp.series('templates', (done) => {
   var files = gulp.src(['src/**/*.js', 'src/**/*.css', 'src/**/*.less', '.tmp/dist/*.js'])
-                  .pipe($.if('*.js', $.angularFilesort()));
+    .pipe($.if('*.js', $.angularFilesort()));
 
   gulp.src('sample/index.html')
-      .pipe(wiredep({
-        directory: './components/',
-        bowerJson: require('./bower.json'),
-        devDependencies: true,
-        dependencies: true
-      }))
-      .pipe($.inject(files))
-      .pipe(gulp.dest('.tmp/dist'))
-      .pipe(connect.reload());
+    .pipe(wiredep({
+      directory: './components/',
+      bowerJson: require('./bower.json'),
+      devDependencies: true,
+      dependencies: true
+    }))
+    .pipe($.inject(files))
+    .pipe(gulp.dest('.tmp/dist'))
+    .pipe(connect.reload());
+
+  done();
+}));
+
+gulp.task('watch', (done) => {
+  gulp.watch(['src/**'], gulp.series('sample', (done) => {
+    done();
+  }));
+  done();
 });
 
-gulp.task('watch', function(){
-  gulp.watch(['src/**'], ['sample']);
-});
-
-gulp.task('serve', ['watch', 'sample'], function(){
-  var proxyOptions = url.parse(scmUrl);
-  proxyOptions.route = '/api/scm';
-
-  var authentication = function(){
-    return function(request, response, next){
-      var auth = scmCredentials.user + ':' + scmCredentials.password;
-      auth = new Buffer(auth).toString('base64');
-      request.headers['Authorization'] = 'Basic ' + auth;
-      next();
-    }
-  };
-
-  var userAgent = function(){
-    return function(request, response, next){
-      request.headers['User-Agent'] = 'adf-scm-widget/v1';
-      next();
-    }
-  };
-
+gulp.task('serve', gulp.series('sample', 'watch', function () {
   connect.server({
     root: ['.tmp/dist', '.'],
     livereload: true,
     port: 9002,
-    middleware: function(connect, opt) {
-      return [
-        authentication(connect, opt),
-        userAgent(),
-        proxy(proxyOptions)];
-    }
   });
-});
+}));
 
 /** build **/
 
-gulp.task('css', function(){
+gulp.task('css', (done) => {
   gulp.src(['src/**/*.css', 'src/**/*.less'])
-      .pipe($.if('*.less', $.less()))
-      .pipe($.concat(pkg.name + '.css'))
-      .pipe(gulp.dest('dist'))
-      .pipe($.rename(pkg.name + '.min.css'))
-      .pipe($.minifyCss())
-      .pipe(gulp.dest('dist'));
+    .pipe($.if('*.less', $.less()))
+    .pipe($.concat(pkg.name + '.css'))
+    .pipe(gulp.dest('dist'))
+    .pipe($.rename(pkg.name + '.min.css'))
+    .pipe($.minifyCss())
+    .pipe(gulp.dest('dist'));
+  done();
 });
 
-gulp.task('js', function() {
+gulp.task('js', (done) => {
   gulp.src(['src/**/*.js', 'src/**/*.html'])
-      .pipe($.if('*.html', $.minifyHtml()))
-      .pipe($.if('*.html', $.angularTemplatecache(pkg.name + '.tpl.js', templateOptions)))
-      .pipe($.angularFilesort())
-      .pipe($.sourcemaps.init())
-      .pipe($.if('*.js', $.replace(/'use strict';/g, '')))
-      .pipe($.concat(pkg.name + '.js'))
-      .pipe($.headerfooter('(function(window, undefined) {\'use strict\';\n', '})(window);'))
-      .pipe($.ngAnnotate(annotateOptions))
-      .pipe(gulp.dest('dist'))
-      .pipe($.rename(pkg.name + '.min.js'))
-      .pipe($.uglify())
-      .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('dist'));
+    .pipe($.if('*.html', $.minifyHtml()))
+    .pipe($.if('*.html', $.angularTemplatecache(pkg.name + '.tpl.js', templateOptions)))
+    .pipe($.angularFilesort())
+    .pipe($.sourcemaps.init())
+    .pipe($.if('*.js', $.replace(/'use strict';/g, '')))
+    .pipe($.concat(pkg.name + '.js'))
+    .pipe($.headerfooter('(function(window, undefined) {\'use strict\';\n', '})(window);'))
+    .pipe($.ngAnnotate(annotateOptions))
+    .pipe(gulp.dest('dist'))
+    .pipe($.rename(pkg.name + '.min.js'))
+    .pipe($.uglify())
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('dist'));
+  done();
 });
 
 /** clean **/
 
-gulp.task('clean', function(cb){
+gulp.task('clean', (done, cb) => {
   del(['dist', '.tmp'], cb);
+  done();
 });
 
-gulp.task('default', ['css', 'js']);
+gulp.task('default', gulp.series('css', 'js'));
