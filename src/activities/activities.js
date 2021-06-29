@@ -32,7 +32,7 @@ angular.module('adf.widget.scm')
             // allow html descriptions
             angular.forEach(activities.activities, function (activity) {
                 activity.changeset.description = $sce.trustAsHtml(activity.changeset.description);
-                activity.repoName = activity["repository-name"];
+                activity.repoName = activity['repository-name'];
             });
 
             // handling and displaying only 15 activities

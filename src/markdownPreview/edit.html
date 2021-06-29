@@ -1,6 +1,16 @@
 <form role="form">
   <div class="form-group">
-    <p><label for="repository">Repository</label>
+    <p>
+      <label for="repository">Repository</label>
+      <span class="grey glyphicon glyphicon-info-sign ng-scope"
+            tabindex="0"
+            ng-focus="repositoryTooltipIsOpen = !repositoryTooltipIsOpen"
+            tooltip-trigger="outsideClick"
+            tooltip-is-open="repositoryTooltipIsOpen"
+            uib-tooltip-html="repositoryTooltip"
+            ng-mouseover="repositoryTooltipIsOpen = !repositoryTooltipIsOpen"
+            tooltip-placement="top"
+            aria-label="Select a repository"></span>
       <select name="repository" id="repository" class="form-control" ng-model="config.repository"
               ng-init="vm.getBranchesByRepositoryId(config.repository)"
               ng-change="vm.getBranchesByRepositoryId(config.repository)">
@@ -10,15 +20,36 @@
       </select>
     </p>
 
-    <p ng-if="vm.branches"><label for="branch">Branch</label>
+    <p ng-if="vm.branches">
+      <label for="branch">Branch</label>
+      <span class="grey glyphicon glyphicon-info-sign ng-scope"
+            tabindex="0"
+            ng-focus="branchTooltipIsOpen = !branchTooltipIsOpen"
+            uib-tooltip-html="branchTooltip"
+            tooltip-is-open="branchTooltipIsOpen"
+            tooltip-trigger="'outsideClick'"
+            ng-mouseover="branchTooltipIsOpen = !branchTooltipIsOpen"
+            tooltip-placement="top"
+            aria-label="Select a branch"></span>
       <select name="branch" id="branch" class="form-control" ng-model="config.branch">
         <option ng-repeat="branch in vm.branches| orderBy: 'name'" value="{{branch.id}}">
           {{branch.name}}
         </option>
       </select>
     </p>
-    <label for="path">Path to Markdown File</label>
-    <input type="text" class="form-control" id="path" ng-model="config.path">
+    <p ng-if="vm.branches">
+      <label for="path">Path to Markdown File</label>
+      <span class="grey glyphicon glyphicon-info-sign ng-scope"
+            tabindex="0"
+            uib-tooltip-html="pathToMarkdownTooltip"
+            ng-focus="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen"
+            tooltip-trigger="outsideClick"
+            tooltip-is-open="pathToMarkdownTooltipIsOpen"
+            ng-mouseover="pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen"
+            tooltip-placement="top"
+            aria-label="Enter a valid path to a markdown file"></span>
+      <input type="text" class="form-control" id="path" ng-model="config.path" required>
+    </p>
   </div>
 </form>
 
