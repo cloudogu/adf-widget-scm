@@ -29,7 +29,7 @@ angular.module('adf.widget.scm')
 
     function request(url) {
       return $http.get(scmEndpoint + url).then(function (response) {
-        if (response.status == 200) {
+        if (response.status === 200) {
           return response.data;
         }
       }, function (error) {
@@ -84,7 +84,7 @@ angular.module('adf.widget.scm')
       }
       return hash;
     }
-    
+
     return {
       getRepositories: getRepositories,
       getRepository: getRepository,
