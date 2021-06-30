@@ -25,8 +25,10 @@
 'use strict';
 
 angular.module('adf.widget.scm')
-  .controller('ScmEditController', function(repositories){
+  .controller('ScmEditController', function(repositories, $scope, $sce){
     var vm = this;
+
+    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository.');
 
     vm.repositories = repositories;
   });
