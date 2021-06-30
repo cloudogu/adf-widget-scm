@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [v0.5.2] - 2021-06-30
+
+### Added
+* Added tooltips for further information about configuration of scm-widgets
+
+### Changed
+* exchange npm package manager with yarn
+
 ## [v0.5.1] - 2020-12-17
 
 ### Fixed
