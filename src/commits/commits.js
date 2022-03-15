@@ -36,7 +36,8 @@ angular.module('adf.widget.scm')
             });
             vm.commits = commits;
 
-            vm.gravatarHash = function (commit) {
-                return SCM.getGravatarHash(commit.properties);
-            };
+          vm.userShorthand = function (user) {
+            return SCM.generateUserShorthand(user);
+          };
+
         });

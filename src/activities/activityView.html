@@ -8,8 +8,10 @@
     <div ng-if="vm.activities">
     <ul class="media-list">
       <li class="media" ng-repeat="activity in vm.activities">
-          <div ng-if="vm.gravatarHash(activity)" class="media-left">
-          <img class="media-object img-thumbnail" ng-src="https://www.gravatar.com/avatar/{{vm.gravatarHash(activity)}}?s=64&d=identicon" alt="">
+          <div class="media-left">
+            <div style="background-color: rgb(27, 125, 170); color: rgb(255, 255, 255); display: inline-block; font-size: 28px; font-weight: normal; height: 65px; line-height: 65px; border-radius: 5px; text-align: center; vertical-align: top; width: 65px;">
+              {{vm.userShorthand(activity)}}
+            </div>
         </div>
         <div class="media-body">
           <!--h4 class="media-heading">Media heading</h4-->

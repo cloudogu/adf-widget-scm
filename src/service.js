@@ -72,17 +72,24 @@ angular.module('adf.widget.scm')
       return request('repositories/' + id + '/branches');
     }
 
-    function getGravatarHash(properties) {
-        var hash;
-      if (properties){
-        for (var i=0; i<properties.length; i++){
-          if (properties[0].key === 'gravatar-hash'){
-               hash = properties[0].value;
-            break;
+    function generateUserShorthand(user){
+      var shorthand = 'Unk.';
+      if (user.name){
+        var username = user.name;
+        if (username){
+          var containsMultipleNames = username.indexOf(' ');
+          if (containsMultipleNames > 0){
+            var values = username.split(' ');
+            // firstname is the string before the first whitespace
+            shorthand = values[0].charAt(0);
+            // lastname is the string after the last whitespace
+            shorthand = shorthand + values[values.length -1].charAt(0);
+          }else{
+            shorthand = username[0].charAt(0);
           }
         }
       }
-      return hash;
+      return shorthand.toUpperCase();
     }
 
     return {
@@ -94,6 +101,6 @@ angular.module('adf.widget.scm')
       getActivities: getActivities,
       getFileContent: getFileContent,
       getBranchesByRepositoryId: getBranchesByRepositoryId,
-      getGravatarHash: getGravatarHash
+      generateUserShorthand: generateUserShorthand
     };
   });
