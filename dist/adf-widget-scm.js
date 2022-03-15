@@ -180,11 +180,11 @@ angular.module('adf.widget.scm', ['adf.provider', 'chart.js', 'ngSanitize', 'btf
       });
   }]);
 
-angular.module("adf.widget.scm").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/scm/src/activities/activityView.html","<div><div ng-if=!vm.activities class=\"alert alert-info\">There are no activities for your available repositories.</div><div ng-if=\"vm.status == 404 || vm.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.status}}:</b> The endpoint could not be reached, this could mean that the activity plugin is not installed.</div><div ng-if=vm.activities><ul class=media-list><li class=media ng-repeat=\"activity in vm.activities\"><div ng-if=vm.gravatarHash(activity) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(activity)}}?s=64&d=identicon\"></div><div class=media-body><b>{{activity.repoName}}</b><p ng-bind-html=activity.changeset.description></p><small>{{activity.changeset.author.name}}, {{activity.changeset.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
+angular.module("adf.widget.scm").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/scm/src/activities/activityView.html","<div><div ng-if=!vm.activities class=\"alert alert-info\">There are no activities for your available repositories.</div><div ng-if=\"vm.status == 404 || vm.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.status}}:</b> The endpoint could not be reached, this could mean that the activity plugin is not installed.</div><div ng-if=vm.activities><ul class=media-list><li class=media ng-repeat=\"activity in vm.activities\"><div class=media-left><div style=\"background-color: rgb(27, 125, 170); color: rgb(255, 255, 255); display: inline-block; font-size: 28px; font-weight: normal; height: 65px; line-height: 65px; border-radius: 5px; text-align: center; vertical-align: top; width: 65px;\">{{vm.userShorthand(activity)}}</div></div><div class=media-body><b>{{activity.repoName}}</b><p ng-bind-html=activity.changeset.description></p><small>{{activity.changeset.author.name}}, {{activity.changeset.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/charts/line-chart.html","<div><div class=\"alert alert-info\" ng-if=!vm.chart>Please insert a repository path in the widget configuration</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist or that the statistics plugin is not installed</div><div ng-if=vm.chart><canvas id=line class=\"chart chart-line\" chart-data=vm.chart.data chart-labels=vm.chart.labels chart-series=vm.chart.series chart-options=vm.chart.options></canvas></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/charts/pie-chart.html","<div><div class=\"alert alert-info\" ng-if=!vm.chart>Please insert a repository path in the widget configuration</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist or that the statistics plugin is not installed</div><div ng-if=vm.chart><canvas id=pie class=\"chart chart-pie\" chart-legend=true chart-data=vm.chart.data chart-labels=vm.chart.labels chart-options=vm.chart.options></canvas></div></div>");
+$templateCache.put("{widgetsPath}/scm/src/commits/view.html","<div><div ng-if=!config.repository class=\"alert alert-info\">Please configure a repository</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist</div><div ng-if=config.repository><ul class=media-list><li class=media ng-repeat=\"commit in vm.commits\"><div style=\"background-color: rgb(27, 125, 170); color: rgb(255, 255, 255); display: inline-block; font-size: 28px;float:left; margin-right: 10px; font-weight: normal; height: 65px; line-height: 65px; border-radius: 5px; text-align: center; vertical-align: top; width: 65px;\">{{vm.userShorthand(commit.author)}}</div><div class=media-body><b><p ng-bind-html=commit.description></p></b> <small>{{commit.author.name}}, {{commit.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/edit/edit.html","<form role=form><div class=form-group><label for=repository>Repository</label> <span class=\"glyphicon glyphicon-info-sign ng-scope\" uib-tooltip-html=repositoryTooltip tooltip-is-open=repositoryTooltipIsOpen tabindex=0 ng-focus=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" tooltip-trigger=outsideClick ng-mouseover=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" tooltip-placement=top aria-label=\"Select a repository\"></span><select name=repository id=repository class=form-control ng-model=config.repository required><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></div></form>");
-$templateCache.put("{widgetsPath}/scm/src/commits/view.html","<div><div ng-if=!config.repository class=\"alert alert-info\">Please configure a repository</div><div ng-if=\"vm.repository.status == 404 || vm.repository.status == 500\" class=\"alert alert-danger\"><b>Error {{vm.repository.status}}</b> the endpoint could not be reached, this could mean that the selected repository does not exist</div><div ng-if=config.repository><ul class=media-list><li class=media ng-repeat=\"commit in vm.commits\"><div ng-if=vm.gravatarHash(commit) class=media-left><img class=\"media-object img-thumbnail\" ng-src=\"https://www.gravatar.com/avatar/{{vm.gravatarHash(commit)}}?s=64&d=identicon\"></div><div class=media-body><p ng-bind-html=commit.description></p><small>{{commit.author.name}}, {{commit.date | date: \'yyyy-MM-dd HH:mm\'}}</small></div></li></ul></div></div>");
 $templateCache.put("{widgetsPath}/scm/src/markdownPreview/edit.html","<form role=form><div class=form-group><p><label for=repository>Repository</label> <span class=\"glyphicon glyphicon-info-sign ng-scope\" tabindex=0 ng-focus=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" tooltip-trigger=outsideClick tooltip-is-open=repositoryTooltipIsOpen uib-tooltip-html=repositoryTooltip ng-mouseover=\"repositoryTooltipIsOpen = !repositoryTooltipIsOpen\" tooltip-placement=top aria-label=\"Select a repository\"></span><select name=repository id=repository class=form-control ng-model=config.repository ng-init=vm.getBranchesByRepositoryId(config.repository) ng-change=vm.getBranchesByRepositoryId(config.repository)><option ng-repeat=\"repository in vm.repositories | orderBy: \'name\'\" value={{repository.id}}>{{repository.name}}</option></select></p><p ng-if=vm.branches><label for=branch>Branch</label> <span class=\"glyphicon glyphicon-info-sign ng-scope\" tabindex=0 ng-focus=\"branchTooltipIsOpen = !branchTooltipIsOpen\" uib-tooltip-html=branchTooltip tooltip-is-open=branchTooltipIsOpen tooltip-trigger=\"\'outsideClick\'\" ng-mouseover=\"branchTooltipIsOpen = !branchTooltipIsOpen\" tooltip-placement=top aria-label=\"Select a branch\"></span><select name=branch id=branch class=form-control ng-model=config.branch><option ng-repeat=\"branch in vm.branches| orderBy: \'name\'\" value={{branch.id}}>{{branch.name}}</option></select></p><p ng-if=vm.branches><label for=path>Path to Markdown File</label> <span class=\"glyphicon glyphicon-info-sign ng-scope\" tabindex=0 uib-tooltip-html=pathToMarkdownTooltip ng-focus=\"pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen\" tooltip-trigger=outsideClick tooltip-is-open=pathToMarkdownTooltipIsOpen ng-mouseover=\"pathToMarkdownTooltipIsOpen = !pathToMarkdownTooltipIsOpen\" tooltip-placement=top aria-label=\"Enter a valid path to a markdown file\"></span> <input type=text class=form-control id=path ng-model=config.path required></p></div></form>");
 $templateCache.put("{widgetsPath}/scm/src/markdownPreview/view.html","<style>\n  div.markdownContent{\n    overflow: auto;\n    width: 100%;\n  }\n</style><div class=\"alert alert-info\" ng-if=\"vm.fileContent === null\">Configure a specific file</div><div ng-if=vm.fileContent btf-markdown=vm.fileContent class=markdownContent></div><div class=\"alert alert-danger\" ng-if=\"vm.fileContent.status == 500 || vm.fileContent.status == 404\"><b>Error {{vm.fileContent.status}}</b> The Markdown file was not found. This may be because the file does not exist or the SCM Manager is not available at the moment.</div>");}]);
 
@@ -250,21 +250,13 @@ angular.module('adf.widget.scm')
 
 
 angular.module('adf.widget.scm')
-        .controller('CommitsController', ["$sce", "config", "repository", "commits", "SCM", function ($sce, config, repository, commits, SCM) {
-            var vm = this;
+  .controller('ScmEditController', ["repositories", "$scope", "$sce", function(repositories, $scope, $sce){
+    var vm = this;
 
-            vm.repository = repository;
+    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository.');
 
-            // allow html descriptions
-            angular.forEach(commits, function (commit) {
-                commit.description = $sce.trustAsHtml(commit.description);
-            });
-            vm.commits = commits;
-
-            vm.gravatarHash = function (commit) {
-                return SCM.getGravatarHash(commit.properties);
-            };
-        }]);
+    vm.repositories = repositories;
+  }]);
 
 /*
  * The MIT License
@@ -293,13 +285,22 @@ angular.module('adf.widget.scm')
 
 
 angular.module('adf.widget.scm')
-  .controller('ScmEditController', ["repositories", "$scope", "$sce", function(repositories, $scope, $sce){
-    var vm = this;
+        .controller('CommitsController', ["$sce", "config", "repository", "commits", "SCM", function ($sce, config, repository, commits, SCM) {
+            var vm = this;
 
-    $scope.repositoryTooltip = $sce.trustAsHtml('Select the repository.');
+            vm.repository = repository;
 
-    vm.repositories = repositories;
-  }]);
+            // allow html descriptions
+            angular.forEach(commits, function (commit) {
+                commit.description = $sce.trustAsHtml(commit.description);
+            });
+            vm.commits = commits;
+
+          vm.userShorthand = function (user) {
+            return SCM.generateUserShorthand(user);
+          };
+
+        }]);
 
 /*
  * The MIT License
@@ -579,8 +580,8 @@ angular.module('adf.widget.scm')
                 vm.activities = activities.activities.slice(0, 15);
             }
 
-            vm.gravatarHash = function (activity) {
-                return SCM.getGravatarHash(activity.changeset.properties);
+            vm.userShorthand = function (activity) {
+                return SCM.generateUserShorthand(activity.changeset.author);
             };
         }]);
 
@@ -658,17 +659,24 @@ angular.module('adf.widget.scm')
       return request('repositories/' + id + '/branches');
     }
 
-    function getGravatarHash(properties) {
-        var hash;
-      if (properties){
-        for (var i=0; i<properties.length; i++){
-          if (properties[0].key === 'gravatar-hash'){
-               hash = properties[0].value;
-            break;
+    function generateUserShorthand(user){
+      var shorthand = 'Unk.';
+      if (user.name){
+        var username = user.name;
+        if (username){
+          var containsMultipleNames = username.indexOf(' ');
+          if (containsMultipleNames > 0){
+            var values = username.split(' ');
+            // firstname is the string before the first whitespace
+            shorthand = values[0].charAt(0);
+            // lastname is the string after the last whitespace
+            shorthand = shorthand + values[values.length -1].charAt(0);
+          }else{
+            shorthand = username[0].charAt(0);
           }
         }
       }
-      return hash;
+      return shorthand.toUpperCase();
     }
 
     return {
@@ -680,7 +688,7 @@ angular.module('adf.widget.scm')
       getActivities: getActivities,
       getFileContent: getFileContent,
       getBranchesByRepositoryId: getBranchesByRepositoryId,
-      getGravatarHash: getGravatarHash
+      generateUserShorthand: generateUserShorthand
     };
   }]);
 })(window);
