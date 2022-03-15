@@ -8,12 +8,12 @@
   <div ng-if="config.repository">
     <ul class="media-list">
       <li class="media" ng-repeat="commit in vm.commits">
-        <div ng-if="vm.gravatarHash(commit)" class="media-left">
-          <img class="media-object img-thumbnail" ng-src="https://www.gravatar.com/avatar/{{vm.gravatarHash(commit)}}?s=64&d=identicon" alt="">
+        <div style="background-color: rgb(27, 125, 170); color: rgb(255, 255, 255); display: inline-block; font-size: 28px;float:left; margin-right: 10px; font-weight: normal; height: 65px; line-height: 65px; border-radius: 5px; text-align: center; vertical-align: top; width: 65px;">
+          {{vm.userShorthand(commit.author)}}
         </div>
         <div class="media-body">
           <!--h4 class="media-heading">Media heading</h4-->
-          <p ng-bind-html="commit.description"></p>
+          <b><p ng-bind-html="commit.description"></p></b>
           <small>{{commit.author.name}}, {{commit.date | date: 'yyyy-MM-dd HH:mm'}}</small>
         </div>
       </li>

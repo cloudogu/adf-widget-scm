@@ -40,7 +40,7 @@ angular.module('adf.widget.scm')
                 vm.activities = activities.activities.slice(0, 15);
             }
 
-            vm.gravatarHash = function (activity) {
-                return SCM.getGravatarHash(activity.changeset.properties);
+            vm.userShorthand = function (activity) {
+                return SCM.generateUserShorthand(activity.changeset.author);
             };
         });
