@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.4] - 2022-03-16
+## Changed
+* Removes gravatar integration from activity and commit widget (#5)
+
 ## [v0.5.3] - 2021-07-01
 ## Changed
 * remove unnecessary attributes from tooltips
